@@ -9,12 +9,10 @@ public class Address {
 
 	public Address() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public Address(int id, String street, String district, String city, String postcode) {
+	public Address(String street, String district, String city, String postcode) {
 		super();
-		this.id = id;
 		this.street = street;
 		this.district = district;
 		this.city = city;

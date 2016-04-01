@@ -30,22 +30,22 @@ public class Order {
 	}
 
 	private Double getOrderCost() {
-		Double totalCostOfOrder = calculateTotalPriceWithoutDiscount();
-
+		Double totalCostOfOrder;
+		AccumulativeCard accumulativeCard;
 		if (listOfPizzas.isEmpty()) {
 			return 0d;
 		}
+		totalCostOfOrder = calculateTotalPriceWithoutDiscount();
 
 		if (discount != null) {
 			totalCostOfOrder -= discount.calculateDiscount();
 		}
 
-		AccumulativeCard accumulativeCard = customer.getAccumulativeCard();
+		accumulativeCard = customer.getAccumulativeCard();
 
 		if (accumulativeCard != null) {
 			totalCostOfOrder -= accumulativeCard.calculateCardDiscount(totalCostOfOrder);
 		}
-		orderPrice = totalCostOfOrder;
 		return totalCostOfOrder;
 	}
 

@@ -27,13 +27,13 @@ public class SimpleOrderServiceTest {
 		listOfPizzas.add(new Pizza(3, "AllMeat", 10.00, PizzaType.Meat));
 		listOfPizzas.add(new Pizza(4, "MeatBalls", 45.00, PizzaType.Meat));
 		listOfPizzas.add(new Pizza(5, "SeaGod", 5.00, PizzaType.Sea));
-		
-		Address address = new Address(1, "K-18", "Vokzalna", "Kyiv", "12334");
-		AccumulativeCardTaskImplementation accumulativeCard = new AccumulativeCardTaskImplementation(1, 50d);
-		Customer customer = new Customer(1, "Roman", address, accumulativeCard);
+
+		Address address = new Address("K-18", "Vokzalna", "Kyiv", "12334");
+		AccumulativeCardTaskImplementation accumulativeCard = new AccumulativeCardTaskImplementation(50d);
+		Customer customer = new Customer("Roman", address, accumulativeCard);
 		Discount discount = new MaxPricePizzaDiscount(listOfPizzas);
 		Order expectedOrder = new Order(customer, listOfPizzas, discount);
-		
+
 		OrderService orderService = new SimpleOrderService();
 		Order actualOrder = orderService.placeNewOrder(customer, discount, 1, 2, 3, 4, 5);
 		actualOrder.setId(2);

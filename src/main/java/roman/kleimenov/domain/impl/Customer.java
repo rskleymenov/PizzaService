@@ -12,9 +12,8 @@ public class Customer {
 
 	}
 
-	public Customer(int id, String name, Address deliveryAddress, AccumulativeCard accumulativeCard) {
+	public Customer(String name, Address deliveryAddress, AccumulativeCard accumulativeCard) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.deliveryAddress = deliveryAddress;
 		this.accumulativeCard = accumulativeCard;
@@ -48,7 +47,7 @@ public class Customer {
 		return accumulativeCard;
 	}
 
-	public void setAccumulativeCard(AccumulativeCardTaskImplementation accumulativeCard) {
+	public void setAccumulativeCard(AccumulativeCard accumulativeCard) {
 		this.accumulativeCard = accumulativeCard;
 	}
 
