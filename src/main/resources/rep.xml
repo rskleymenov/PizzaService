@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean name="pizzaRepository" class="com.fusillade.repository.impl.InMemPizzaRepository"
+		autowire="byType">
+		<property name="listOfPizzas">
+			<list>
+				<bean class="com.fusillade.domain.entity.Pizza">
+					<constructor-arg index="0" value="1" />
+					<constructor-arg index="1" value="Vegan" />
+					<constructor-arg index="2" value="19.50" />
+					<constructor-arg index="3" value="Vegetarian" />
+				</bean>
+				<bean class="com.fusillade.domain.entity.Pizza">
+					<constructor-arg index="0" value="2" />
+					<constructor-arg index="1" value="Original" />
+					<constructor-arg index="2" value="20.50" />
+					<constructor-arg index="3" value="Sea" />
+				</bean>
+				<bean class="com.fusillade.domain.entity.Pizza">
+					<constructor-arg index="0" value="3" />
+					<constructor-arg index="1" value="AllMeat" />
+					<constructor-arg index="2" value="10.00" />
+					<constructor-arg index="3" value="Meat" />
+				</bean>
+				<bean class="com.fusillade.domain.entity.Pizza">
+					<constructor-arg index="0" value="4" />
+					<constructor-arg index="1" value="MeatBalls" />
+					<constructor-arg index="2" value="45.00" />
+					<constructor-arg index="3" value="Meat" />
+				</bean>
+				<bean class="com.fusillade.domain.entity.Pizza">
+					<constructor-arg index="0" value="5" />
+					<constructor-arg index="1" value="SeaGod" />
+					<constructor-arg index="2" value="5.00" />
+					<constructor-arg index="3" value="Sea" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean name="orderRepository" class="com.fusillade.repository.impl.InMemOrderRepository"
+		autowire="byType" />
+</beans>

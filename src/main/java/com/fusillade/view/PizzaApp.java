@@ -13,7 +13,11 @@ import com.fusillade.service.OrderService;
 
 public class PizzaApp {
 	public static void main(String args[]) {
-		ConfigurableApplicationContext applicationContext = new ClassPathXmlApplicationContext("AppContext.xml");
+		
+		ConfigurableApplicationContext repContext = new ClassPathXmlApplicationContext("rep.xml");
+		ConfigurableApplicationContext applicationContext = new ClassPathXmlApplicationContext(
+				new String[] { "AppContext.xml" }, repContext);
+		
 		OrderService orderService = (OrderService) applicationContext.getBean("simpleOrderService");
 		
 		Address address = new Address("K-18", "Vokzalna", "Kyiv", "12334");

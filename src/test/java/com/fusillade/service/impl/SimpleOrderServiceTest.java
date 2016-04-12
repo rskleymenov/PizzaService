@@ -25,7 +25,9 @@ public class SimpleOrderServiceTest {
 	
 	@Before
 	public void init() {
-		applicationContext = new ClassPathXmlApplicationContext("AppContext.xml");
+		ConfigurableApplicationContext repContext = new ClassPathXmlApplicationContext("rep.xml");
+		applicationContext = new ClassPathXmlApplicationContext(
+				new String[] { "AppContext.xml" }, repContext);
 		orderService = (OrderService) applicationContext.getBean("simpleOrderService");
 	}
 	
