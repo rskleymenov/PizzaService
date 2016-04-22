@@ -3,11 +3,10 @@ package com.fusillade.domain.entity;
 import java.util.List;
 
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import com.fusillade.domain.entity.states.NewOrderState;
 
-@Component
+@Domain
 @Scope("prototype")
 public class Order {
 	private int id;

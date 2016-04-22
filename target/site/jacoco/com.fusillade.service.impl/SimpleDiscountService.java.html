@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SimpleDiscountService.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">autocomplete</a> &gt; <a href="index.source.html" class="el_package">com.fusillade.service.impl</a> &gt; <span class="el_source">SimpleDiscountService.java</span></div><h1>SimpleDiscountService.java</h1><pre class="source lang-java linenums">package com.fusillade.service.impl;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.fusillade.domain.discounts.AccumulativeCard;
+import com.fusillade.domain.discounts.Discount;
+import com.fusillade.domain.entity.Customer;
+import com.fusillade.domain.entity.Order;
+import com.fusillade.service.AccumulativeCardService;
+import com.fusillade.service.DiscountService;
+
+@Service
+public class SimpleDiscountService implements DiscountService {
+
+	private AccumulativeCardService accumulativeCardService;
+<span class="fc" id="L20">	private Set&lt;Discount&gt; discountSet = new LinkedHashSet&lt;&gt;();</span>
+
+	@Autowired
+	public SimpleDiscountService(AccumulativeCardService accumulativeCardService) {
+<span class="fc" id="L24">		super();</span>
+<span class="fc" id="L25">		this.accumulativeCardService = accumulativeCardService;</span>
+<span class="fc" id="L26">	}</span>
+
+	@Override
+	public Double calculateDiscount(Order order) {
+<span class="fc" id="L30">		Double totalDiscount = 0d;</span>
+<span class="fc" id="L31">		Double cardDiscount = 0d;</span>
+<span class="fc" id="L32">		totalDiscount = calculateTotalDiscount(order, totalDiscount);</span>
+<span class="fc" id="L33">		cardDiscount = calculateAccumulativeCardDiscount(order.getTotalPrice(), order.getCustomer());</span>
+<span class="fc" id="L34">		return totalDiscount + cardDiscount;</span>
+	}
+
+	private Double calculateAccumulativeCardDiscount(Double totalPrice, Customer customer) {
+<span class="fc" id="L38">		AccumulativeCard accumulativeCard = accumulativeCardService.getCardByCustomer(customer);</span>
+<span class="pc bpc" id="L39" title="2 of 4 branches missed.">		if (accumulativeCardService != null &amp;&amp; accumulativeCard != null) {</span>
+<span class="fc" id="L40">			return accumulativeCard.calculateCardDiscount(totalPrice);</span>
+		}
+<span class="nc" id="L42">		return 0d;</span>
+	}
+
+	private Double calculateTotalDiscount(Order order, Double totalDiscount) {
+<span class="fc bfc" id="L46" title="All 2 branches covered.">		for (Discount discount : discountSet) {</span>
+<span class="fc" id="L47">			totalDiscount += discount.calculateDiscount(order);</span>
+<span class="fc" id="L48">		}</span>
+<span class="fc" id="L49">		return totalDiscount;</span>
+	}
+
+	@Override
+	public boolean addDiscounts(Discount... discounts) {
+<span class="fc bfc" id="L54" title="All 2 branches covered.">		if (discounts != null)</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">			if (discounts.length != 0) {</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">				for (Discount discount : discounts) {</span>
+<span class="fc" id="L57">					discountSet.add(discount);</span>
+				}
+<span class="fc" id="L59">				return true;</span>
+			}
+<span class="fc" id="L61">		return false;</span>
+	}
+
+	@Override
+	public boolean deleteDiscount(Discount discount) {
+<span class="fc" id="L66">		return discountSet.remove(discount);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

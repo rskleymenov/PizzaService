@@ -1,0 +1,8 @@
+com\fusillade\repository\impl\InMemOrderRepositoryTest.class
+com\fusillade\domain\discounts\impl\AccumulativeCardTaskImplementationTest.class
+com\fusillade\service\impl\SimpleDiscountServiceTest$1.class
+com\fusillade\service\impl\SimpleOrderServiceTest.class
+com\fusillade\service\impl\SimpleDiscountServiceTest.class
+com\fusillade\service\impl\SimpleAccumulativeCardServiceTest.class
+com\fusillade\repository\impl\InMemPizzaRepositoryTest.class
+com\fusillade\domain\entity\OrderTest.class
