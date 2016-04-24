@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.fusillade.domain.entity.Order;
+import com.fusillade.domain.entity.impl.Order;
 import com.fusillade.repository.OrderRepository;
 
 @Repository

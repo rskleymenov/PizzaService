@@ -5,8 +5,8 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.fusillade.domain.entity.Pizza;
 import com.fusillade.domain.entity.enums.PizzaType;
+import com.fusillade.domain.entity.impl.Pizza;
 
 public class PizzaMapper implements RowMapper<Pizza>{
 

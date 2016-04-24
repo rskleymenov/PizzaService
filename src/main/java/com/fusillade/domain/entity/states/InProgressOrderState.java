@@ -1,7 +1,7 @@
 package com.fusillade.domain.entity.states;
 
-import com.fusillade.domain.entity.Order;
 import com.fusillade.domain.entity.State;
+import com.fusillade.domain.entity.impl.Order;
 
 public class InProgressOrderState implements State {
 

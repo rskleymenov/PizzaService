@@ -12,11 +12,11 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.fusillade.domain.discounts.impl.AccumulativeCardDiscount;
-import com.fusillade.domain.entity.Address;
-import com.fusillade.domain.entity.Customer;
-import com.fusillade.domain.entity.Order;
-import com.fusillade.domain.entity.Pizza;
 import com.fusillade.domain.entity.enums.PizzaType;
+import com.fusillade.domain.entity.impl.Address;
+import com.fusillade.domain.entity.impl.Customer;
+import com.fusillade.domain.entity.impl.Order;
+import com.fusillade.domain.entity.impl.Pizza;
 import com.fusillade.service.OrderService;
 
 public class SimpleOrderServiceTest {
@@ -46,7 +46,7 @@ public class SimpleOrderServiceTest {
 		listOfPizzas.add(new Pizza(4, "MeatBalls", 45.00, PizzaType.Meat));
 		listOfPizzas.add(new Pizza(5, "SeaGod", 5.00, PizzaType.Sea));
 
-		Address address = new Address("K-18", "Vokzalna", "Kyiv", "12334");
+		Address address = new Address("Kyiv", "12334");
 		AccumulativeCardDiscount accumulativeCard = new AccumulativeCardDiscount(50d);
 		Customer customer = new Customer("Roman", address);
 		Order expectedOrder = new Order(customer, listOfPizzas);
@@ -60,7 +60,7 @@ public class SimpleOrderServiceTest {
 	
 	@Test
 	public void setOrderInProgressStateShouldReturnTrue() {
-		Address address = new Address("K-18", "Vokzalna", "Kyiv", "12334");
+		Address address = new Address("Kyiv", "12334");
 		Customer customer = new Customer("Roman", address);
 		Order order = orderService.placeNewOrder(customer, 1, 2);
 		assertTrue(orderService.setOrderInProgressState(order));
@@ -68,7 +68,7 @@ public class SimpleOrderServiceTest {
 	
 	@Test
 	public void setOrderInProgressStateShouldReturnFalse() {
-		Address address = new Address("K-18", "Vokzalna", "Kyiv", "12334");
+		Address address = new Address("Kyiv", "12334");
 		Customer customer = new Customer("Roman", address);
 		Order order = orderService.placeNewOrder(customer, 1, 2);
 		orderService.setOrderInCanceledState(order);
@@ -77,7 +77,7 @@ public class SimpleOrderServiceTest {
 	
 	@Test
 	public void setOrderInCanceledShouldReturnTrue() {
-		Address address = new Address("K-18", "Vokzalna", "Kyiv", "12334");
+		Address address = new Address("Kyiv", "12334");
 		Customer customer = new Customer("Roman", address);
 		Order order = orderService.placeNewOrder(customer, 1, 2);
 		assertTrue(orderService.setOrderInCanceledState(order));
@@ -88,8 +88,6 @@ public class SimpleOrderServiceTest {
 		Address address = new Address();
 		address.setId(1);
 		address.setCity("Kyiv");
-		address.setDistrict("Vokzalna");
-		address.setPostcode("12334");
 		address.setStreet("K-18");
 		Customer customer = new Customer("Roman", address);
 		Order order = orderService.placeNewOrder(customer, 1, 2);
@@ -102,7 +100,7 @@ public class SimpleOrderServiceTest {
 	
 	@Test
 	public void setOrderInDoneStatusShouldReturnTrue() {
-		Address address = new Address("K-18", "Vokzalna", "Kyiv", "12334");
+		Address address = new Address("Kyiv", "12334");
 		Customer customer = new Customer("Roman", address);
 		Order order = orderService.placeNewOrder(customer, 1, 2);
 		orderService.setOrderInProgressState(order);
@@ -113,7 +111,7 @@ public class SimpleOrderServiceTest {
 	
 	@Test
 	public void setOrderInDoneStatusShouldReturnFalse() {
-		Address address = new Address("K-18", "Vokzalna", "Kyiv", "12334");
+		Address address = new Address("Kyiv", "12334");
 		Customer customer = new Customer("Roman", address);
 		Order order = orderService.placeNewOrder(customer, 1, 2);
 		AccumulativeCardDiscount accumulativeCard = new AccumulativeCardDiscount(50d);

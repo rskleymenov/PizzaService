@@ -6,9 +6,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.fusillade.domain.discounts.AccumulativeCard;
 import com.fusillade.domain.discounts.impl.AccumulativeCardDiscount;
 import com.fusillade.domain.discounts.impl.MaxPricePizzaDiscount;
-import com.fusillade.domain.entity.Address;
-import com.fusillade.domain.entity.Customer;
-import com.fusillade.domain.entity.Order;
+import com.fusillade.domain.entity.impl.Address;
+import com.fusillade.domain.entity.impl.Customer;
+import com.fusillade.domain.entity.impl.Order;
 import com.fusillade.service.OrderService;
 
 public class PizzaApp {
@@ -20,7 +20,7 @@ public class PizzaApp {
 		
 		OrderService orderService = (OrderService) applicationContext.getBean("simpleOrderService");
 		
-		Address address = new Address("K-18", "Vokzalna", "Kyiv", "12334");
+		Address address = new Address("Kyiv", "12334");
 		AccumulativeCard accumulativeCard = new AccumulativeCardDiscount(0d);
 		Customer customer = new Customer("Roman", address);
 		orderService.addAccumulativeCardToCustomer(customer, accumulativeCard);

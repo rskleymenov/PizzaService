@@ -8,8 +8,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.fusillade.domain.entity.Pizza;
 import com.fusillade.domain.entity.enums.PizzaType;
+import com.fusillade.domain.entity.impl.Pizza;
 import com.fusillade.repository.impl.InMemPizzaRepository;
 
 public class InMemPizzaRepositoryTest {

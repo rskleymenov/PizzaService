@@ -2,7 +2,7 @@ package com.fusillade.repository;
 
 import java.util.List;
 
-import com.fusillade.domain.entity.Pizza;
+import com.fusillade.domain.entity.impl.Pizza;
 
 public interface PizzaRepository {
 	

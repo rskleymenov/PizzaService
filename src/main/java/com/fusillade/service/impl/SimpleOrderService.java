@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.fusillade.domain.discounts.AccumulativeCard;
 import com.fusillade.domain.discounts.Discount;
-import com.fusillade.domain.entity.Customer;
-import com.fusillade.domain.entity.Order;
-import com.fusillade.domain.entity.Pizza;
 import com.fusillade.domain.entity.State;
+import com.fusillade.domain.entity.impl.Customer;
+import com.fusillade.domain.entity.impl.Order;
+import com.fusillade.domain.entity.impl.Pizza;
 import com.fusillade.domain.entity.states.CancelledOrderState;
 import com.fusillade.domain.entity.states.DoneOrderState;
 import com.fusillade.domain.entity.states.InProgressOrderState;

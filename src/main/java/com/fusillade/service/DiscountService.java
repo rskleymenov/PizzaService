@@ -1,7 +1,7 @@
 package com.fusillade.service;
 
 import com.fusillade.domain.discounts.Discount;
-import com.fusillade.domain.entity.Order;
+import com.fusillade.domain.entity.impl.Order;
 
 public interface DiscountService {
 	

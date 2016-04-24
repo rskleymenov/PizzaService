@@ -43,7 +43,7 @@ COLLATE = utf8_unicode_ci;
 -- Table `mydb`.`CUSTOMER`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `PizzaService`.`CUSTOMER` (
-  `ID` INT NOT NULL,
+  `ID` INT NOT NULL AUTO_INCREMENT,
   `NAME` VARCHAR(45) NOT NULL,
   `SURNAME` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`ID`))
@@ -75,7 +75,7 @@ COLLATE = utf8_unicode_ci;
 -- Table `mydb`.`ORDER`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `PizzaService`.`ORDER` (
-  `ID` INT NOT NULL,
+  `ID` INT NOT NULL AUTO_INCREMENT,
   `STATE` VARCHAR(45) NOT NULL,
   `PRICE` DECIMAL(10,2) NOT NULL,
   `DISCOUNT` DECIMAL(10,2) NULL,
@@ -126,7 +126,7 @@ COLLATE = utf8_unicode_ci;
 -- -----------------------------------------------------
 -- Table `mydb`.`ORDER_has_PIZZA`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `PizzaService`.`ORDER_has_PIZZA` (
+CREATE TABLE IF NOT EXISTS `PizzaService`.`ORDER_PIZZA` (
   `ORDER_ID` INT NOT NULL,
   `PIZZA_ID` INT NOT NULL,
   `pizzas` INT NOT NULL,

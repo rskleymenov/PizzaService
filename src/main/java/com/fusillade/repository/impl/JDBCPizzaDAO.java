@@ -14,7 +14,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import com.fusillade.domain.entity.Pizza;
+import com.fusillade.domain.entity.impl.Pizza;
 import com.fusillade.repository.PizzaRepository;
 
 @Repository

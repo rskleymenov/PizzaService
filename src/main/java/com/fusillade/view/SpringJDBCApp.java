@@ -3,8 +3,8 @@ package com.fusillade.view;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.fusillade.domain.entity.Pizza;
 import com.fusillade.domain.entity.enums.PizzaType;
+import com.fusillade.domain.entity.impl.Pizza;
 import com.fusillade.repository.impl.JDBCPizzaDAO;
 
 public class SpringJDBCApp {

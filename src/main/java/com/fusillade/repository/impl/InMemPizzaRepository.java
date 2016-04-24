@@ -3,8 +3,8 @@ package com.fusillade.repository.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fusillade.domain.entity.Pizza;
 import com.fusillade.domain.entity.enums.PizzaType;
+import com.fusillade.domain.entity.impl.Pizza;
 import com.fusillade.repository.PizzaRepository;
 
 public class InMemPizzaRepository implements PizzaRepository {

@@ -1,9 +1,11 @@
-package com.fusillade.domain.entity;
+package com.fusillade.domain.entity.impl;
 
 import java.util.List;
 
 import org.springframework.context.annotation.Scope;
 
+import com.fusillade.domain.entity.Domain;
+import com.fusillade.domain.entity.State;
 import com.fusillade.domain.entity.states.NewOrderState;
 
 @Domain

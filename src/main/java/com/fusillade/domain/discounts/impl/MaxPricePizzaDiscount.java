@@ -1,8 +1,8 @@
 package com.fusillade.domain.discounts.impl;
 
 import com.fusillade.domain.discounts.Discount;
-import com.fusillade.domain.entity.Order;
-import com.fusillade.domain.entity.Pizza;
+import com.fusillade.domain.entity.impl.Order;
+import com.fusillade.domain.entity.impl.Pizza;
 
 public class MaxPricePizzaDiscount implements Discount {
 	private final static double PIZZA_PERCENT_DISCOUNT = 0.3;
