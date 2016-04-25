@@ -3,6 +3,7 @@ package com.fusillade.service.impl;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
@@ -48,7 +49,7 @@ public class SimpleOrderServiceTest {
 
 		Address address = new Address("Kyiv", "12334");
 		AccumulativeCardDiscount accumulativeCard = new AccumulativeCardDiscount(50d);
-		Customer customer = new Customer("Roman", address);
+		Customer customer = new Customer("Roman", "Kleimenov", Arrays.asList(address));
 		Order expectedOrder = new Order(customer, listOfPizzas);
 
 		orderService.addAccumulativeCardToCustomer(customer, accumulativeCard);
@@ -61,7 +62,7 @@ public class SimpleOrderServiceTest {
 	@Test
 	public void setOrderInProgressStateShouldReturnTrue() {
 		Address address = new Address("Kyiv", "12334");
-		Customer customer = new Customer("Roman", address);
+		Customer customer = new Customer("Roman", "Kleimenov", Arrays.asList(address));
 		Order order = orderService.placeNewOrder(customer, 1, 2);
 		assertTrue(orderService.setOrderInProgressState(order));
 	}
@@ -69,7 +70,7 @@ public class SimpleOrderServiceTest {
 	@Test
 	public void setOrderInProgressStateShouldReturnFalse() {
 		Address address = new Address("Kyiv", "12334");
-		Customer customer = new Customer("Roman", address);
+		Customer customer = new Customer("Roman", "Kleimenov", Arrays.asList(address));
 		Order order = orderService.placeNewOrder(customer, 1, 2);
 		orderService.setOrderInCanceledState(order);
 		assertFalse(orderService.setOrderInProgressState(order));
@@ -78,7 +79,7 @@ public class SimpleOrderServiceTest {
 	@Test
 	public void setOrderInCanceledShouldReturnTrue() {
 		Address address = new Address("Kyiv", "12334");
-		Customer customer = new Customer("Roman", address);
+		Customer customer = new Customer("Roman", "Kleimenov", Arrays.asList(address));
 		Order order = orderService.placeNewOrder(customer, 1, 2);
 		assertTrue(orderService.setOrderInCanceledState(order));
 	}
@@ -89,7 +90,7 @@ public class SimpleOrderServiceTest {
 		address.setId(1);
 		address.setCity("Kyiv");
 		address.setStreet("K-18");
-		Customer customer = new Customer("Roman", address);
+		Customer customer = new Customer("Roman", "Kleimenov", Arrays.asList(address));
 		Order order = orderService.placeNewOrder(customer, 1, 2);
 		orderService.setOrderInProgressState(order);
 		AccumulativeCardDiscount accumulativeCard = new AccumulativeCardDiscount(50d);
@@ -101,7 +102,7 @@ public class SimpleOrderServiceTest {
 	@Test
 	public void setOrderInDoneStatusShouldReturnTrue() {
 		Address address = new Address("Kyiv", "12334");
-		Customer customer = new Customer("Roman", address);
+		Customer customer = new Customer("Roman", "Kleimenov", Arrays.asList(address));
 		Order order = orderService.placeNewOrder(customer, 1, 2);
 		orderService.setOrderInProgressState(order);
 		AccumulativeCardDiscount accumulativeCard = new AccumulativeCardDiscount(50d);
@@ -112,7 +113,7 @@ public class SimpleOrderServiceTest {
 	@Test
 	public void setOrderInDoneStatusShouldReturnFalse() {
 		Address address = new Address("Kyiv", "12334");
-		Customer customer = new Customer("Roman", address);
+		Customer customer = new Customer("Roman", "Kleimenov", Arrays.asList(address));
 		Order order = orderService.placeNewOrder(customer, 1, 2);
 		AccumulativeCardDiscount accumulativeCard = new AccumulativeCardDiscount(50d);
 		orderService.addAccumulativeCardToCustomer(customer, accumulativeCard);

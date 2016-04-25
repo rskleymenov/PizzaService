@@ -3,9 +3,11 @@ package com.fusillade.domain.entity.impl;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Address {
@@ -14,6 +16,7 @@ public class Address {
 	private int id;
 	private String street;
 	private String city;	
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "addresses")
 	private List<Customer> customers;
 
 	public Address() {

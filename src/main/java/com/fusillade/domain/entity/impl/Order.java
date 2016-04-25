@@ -2,21 +2,37 @@ package com.fusillade.domain.entity.impl;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
 import org.springframework.context.annotation.Scope;
 
 import com.fusillade.domain.entity.Domain;
+import com.fusillade.domain.entity.OrderStateConverter;
 import com.fusillade.domain.entity.State;
 import com.fusillade.domain.entity.states.NewOrderState;
 
-@Domain
-@Scope("prototype")
+/*@Domain
+@Scope("prototype")*/
 public class Order {
+
 	private int id;
 	private static int nextId = 0;
 	private Customer customer;
 	private List<Pizza> listOfPizzas;
 	private State state;
+	private Double price = 0d;
 	private Double discount = 0d;
+	private Address address;
 
 	private Order() {
 		super();
@@ -28,6 +44,14 @@ public class Order {
 		this();
 		this.customer = customer;
 		this.listOfPizzas = listOfPizzas;
+	}
+
+	public Order(Customer customerFromOrder, Double discount, Double price, Address address) {
+		super();
+		this.customer = customerFromOrder;
+		this.discount = discount;
+		this.price = price;
+		this.address = address;
 	}
 
 	public boolean changeCurrentOrder(List<Pizza> listOfPizzas) {
@@ -90,6 +114,30 @@ public class Order {
 		this.listOfPizzas = listOfPizzas;
 	}
 
+	public Customer getCustomerFromOrder() {
+		return customer;
+	}
+
+	public void setCustomerFromOrder(Customer customerFromOrder) {
+		this.customer = customerFromOrder;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -135,9 +183,5 @@ public class Order {
 			return false;
 		return true;
 	}
-
-	
-
-
 
 }

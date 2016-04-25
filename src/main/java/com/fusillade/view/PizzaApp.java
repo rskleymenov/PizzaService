@@ -1,5 +1,7 @@
 package com.fusillade.view;
 
+import java.util.Arrays;
+
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -22,7 +24,7 @@ public class PizzaApp {
 		
 		Address address = new Address("Kyiv", "12334");
 		AccumulativeCard accumulativeCard = new AccumulativeCardDiscount(0d);
-		Customer customer = new Customer("Roman", address);
+		Customer customer = new Customer("Roman", "Kleimenov", Arrays.asList(address));
 		orderService.addAccumulativeCardToCustomer(customer, accumulativeCard);
 
 		Order order = orderService.placeNewOrder(customer, 1, 2, 3, 4, 5);

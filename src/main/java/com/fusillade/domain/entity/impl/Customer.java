@@ -1,10 +1,20 @@
 package com.fusillade.domain.entity.impl;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
+import com.fusillade.domain.discounts.AccumulativeCard;
+import com.fusillade.domain.discounts.impl.AccumulativeCardDiscount;
 
 @Entity
 public class Customer {
@@ -13,18 +23,16 @@ public class Customer {
 	private int id;
 	private String name;
 	private String surname;
-
-	@Transient
-	private Address deliveryAddress;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "CUSTOMER_ADDRESS", joinColumns = { @JoinColumn(name = "CUSTOMER_ID") }, inverseJoinColumns = {
+			@JoinColumn(name = "ADDRESS_ID") })
+	private List<Address> addresses;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL, targetEntity = AccumulativeCardDiscount.class)
+	private List<AccumulativeCard> accumulativeCards;
 
 	public Customer() {
-
-	}
-
-	public Customer(String name, Address deliveryAddress) {
 		super();
-		this.name = name;
-		this.deliveryAddress = deliveryAddress;
+		// TODO Auto-generated constructor stub
 	}
 
 	public Customer(String name, String surname) {
@@ -33,11 +41,11 @@ public class Customer {
 		this.surname = surname;
 	}
 
-	public Customer(String name, String surname, Address deliveryAddress) {
+	public Customer(String name, String surname, List<Address> addresses) {
 		super();
 		this.name = name;
 		this.surname = surname;
-		this.deliveryAddress = deliveryAddress;
+		this.addresses = addresses;
 	}
 
 	public int getId() {
@@ -56,14 +64,6 @@ public class Customer {
 		this.name = name;
 	}
 
-	public Address getDeliveryAddress() {
-		return deliveryAddress;
-	}
-
-	public void setDeliveryAddress(Address deliveryAddress) {
-		this.deliveryAddress = deliveryAddress;
-	}
-
 	public String getSurname() {
 		return surname;
 	}
@@ -72,4 +72,19 @@ public class Customer {
 		this.surname = surname;
 	}
 
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
+
+	public List<AccumulativeCard> getAccumulativeCards() {
+		return accumulativeCards;
+	}
+
+	public void setAccumulativeCards(List<AccumulativeCard> accumulativeCards) {
+		this.accumulativeCards = accumulativeCards;
+	}
 }
