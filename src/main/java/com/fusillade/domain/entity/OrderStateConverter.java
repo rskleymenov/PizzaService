@@ -10,7 +10,7 @@ public class OrderStateConverter implements AttributeConverter<State, String>{
 
 	@Override
 	public String convertToDatabaseColumn(State attribute) {
-		return attribute.getClass().getName();
+		return attribute.getClass().getSimpleName();
 	}
 
 	@Override

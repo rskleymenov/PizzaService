@@ -6,10 +6,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.fusillade.domain.entity.enums.PizzaType;
 
 @Entity
+@Table(name = "PIZZASERVICE.PIZZA")
 public class Pizza {
 
 	@Id

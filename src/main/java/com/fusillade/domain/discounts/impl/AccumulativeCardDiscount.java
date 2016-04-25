@@ -14,7 +14,7 @@ import com.fusillade.domain.discounts.AccumulativeCard;
 import com.fusillade.domain.entity.impl.Customer;
 
 @Entity
-@Table(name = "ACCUMULATIVE_CARD")
+@Table(name = "PIZZASERVICE.ACCUMULATIVE_CARD")
 public class AccumulativeCardDiscount implements AccumulativeCard {
 	private static final Double CARD_DISCOUNT = 0.1d;
 	private static final Double MAX_CARD_DISCOUNT = 0.3d;

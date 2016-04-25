@@ -12,11 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.fusillade.domain.discounts.AccumulativeCard;
 import com.fusillade.domain.discounts.impl.AccumulativeCardDiscount;
 
 @Entity
+@Table(name = "PIZZASERVICE.CUSTOMER")
 public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +31,8 @@ public class Customer {
 	private List<Address> addresses;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL, targetEntity = AccumulativeCardDiscount.class)
 	private List<AccumulativeCard> accumulativeCards;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
+	private List<Order> orders;
 
 	public Customer() {
 		super();
@@ -86,5 +90,13 @@ public class Customer {
 
 	public void setAccumulativeCards(List<AccumulativeCard> accumulativeCards) {
 		this.accumulativeCards = accumulativeCards;
+	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 }

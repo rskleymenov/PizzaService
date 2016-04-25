@@ -45,10 +45,10 @@ public class JPAWithoutSpring {
 		customer.setAccumulativeCards(Arrays.asList(accumulativeCard1, accumulativeCard2));
 		
 		
-		Order order = new Order(customer, 15d, 15d, address2);
 		try {
 			em.getTransaction().begin();
-			em.persist(customer);
+			customer = em.find(Customer.class, 1);
+			System.out.println(customer.getOrders());
 			em.getTransaction().commit();
 		} finally {
 			em.close();
