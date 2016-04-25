@@ -1,9 +1,13 @@
 package com.fusillade.domain.entity.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -39,6 +44,11 @@ public class Order {
 	@OneToOne
 	@JoinColumn(name = "ADDRESS_ID")
 	private Address address;
+	@ElementCollection
+	@CollectionTable(name = "pizzaservice.order_pizza")
+	@MapKeyJoinColumn(name = "PIZZA_ID")
+	@Column(name = "pizzas")
+	private Map<Pizza, Integer> pizzasInOrder;
 
 	public Order() {
 		super();
@@ -127,6 +137,14 @@ public class Order {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+
+	public Map<Pizza, Integer> getPizzasInOrder() {
+		return pizzasInOrder;
+	}
+
+	public void setPizzasInOrder(Map<Pizza, Integer> pizzasInOrder) {
+		this.pizzasInOrder = pizzasInOrder;
 	}
 
 	@Override

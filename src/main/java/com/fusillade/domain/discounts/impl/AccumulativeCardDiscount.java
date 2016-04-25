@@ -82,4 +82,11 @@ public class AccumulativeCardDiscount implements AccumulativeCard {
 		return discount;
 	}
 
+	@Override
+	public String toString() {
+		return "AccumulativeCardDiscount [id=" + id + ", sum=" + sum + ", customer=" + customer.getSurname() + "]";
+	}
+	
+	
+
 }
