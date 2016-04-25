@@ -15,8 +15,8 @@ import com.fusillade.domain.discounts.AccumulativeCard;
 import com.fusillade.domain.discounts.Discount;
 import com.fusillade.domain.discounts.impl.AccumulativeCardDiscount;
 import com.fusillade.domain.discounts.impl.MaxPricePizzaDiscount;
-import com.fusillade.domain.entity.impl.Customer;
-import com.fusillade.domain.entity.impl.Order;
+import com.fusillade.domain.entity.Customer;
+import com.fusillade.domain.entity.Order;
 import com.fusillade.service.AccumulativeCardService;
 import com.fusillade.service.DiscountService;
 import com.fusillade.service.OrderService;
@@ -72,7 +72,6 @@ public class SimpleDiscountServiceTest {
 	public void addDiscountShouldReturnFalseDueToNullInputValue() {
 		AccumulativeCardService accumulativeCardService = new SimpleAccumulativeCardService();
 		DiscountService discountService = new SimpleDiscountService(accumulativeCardService);
-		
 		assertFalse(discountService.addDiscounts(null));
 	}
 

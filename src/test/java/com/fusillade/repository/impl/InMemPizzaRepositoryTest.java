@@ -8,9 +8,9 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.fusillade.domain.entity.Pizza;
 import com.fusillade.domain.entity.enums.PizzaType;
-import com.fusillade.domain.entity.impl.Pizza;
-import com.fusillade.repository.impl.InMemPizzaRepository;
+import com.fusillade.repository.InMemRepositoryImpl.InMemPizzaRepository;
 
 public class InMemPizzaRepositoryTest {
 
@@ -29,11 +29,11 @@ public class InMemPizzaRepositoryTest {
 	public void getPizzaByIDShoudReturnSecondPizza() {
 		InMemPizzaRepository inMemPizzaRepository = new InMemPizzaRepository();
 		inMemPizzaRepository.init();
-		assertEquals(new Pizza(2, "Original", 20.50, PizzaType.Sea), inMemPizzaRepository.getPizzaByID(2));
+		assertEquals(new Pizza(2, "Original", 20.50, PizzaType.Sea), inMemPizzaRepository.findById(2));
 	}
 	
 	@Test(expected = ArrayIndexOutOfBoundsException.class)
 	public void getPizzaByIDShoudRiseException() {
-		 new InMemPizzaRepository().getPizzaByID(0);
+		 new InMemPizzaRepository().findById(0);
 	}
 }

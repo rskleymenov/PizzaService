@@ -1,4 +1,4 @@
-package com.fusillade.domain.entity.impl;
+package com.fusillade.domain.entity;
 
 import java.util.List;
 import java.util.Map;
@@ -20,12 +20,15 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.fusillade.domain.entity.OrderStateConverter;
-import com.fusillade.domain.entity.State;
-import com.fusillade.domain.entity.states.NewOrderState;
+import org.springframework.context.annotation.Scope;
 
-/*@Domain
-@Scope("prototype")*/
+import com.fusillade.domain.entity.annotations.Domain;
+import com.fusillade.domain.states.State;
+import com.fusillade.domain.states.impl.NewOrderState;
+import com.fusillade.domain.states.impl.OrderStateConverter;
+
+@Domain
+@Scope("prototype")
 @Entity
 @Table(name = "PIZZASERVICE.ORDER")
 public class Order {
@@ -38,7 +41,7 @@ public class Order {
 	private State state;
 	private Double price = 0d;
 	private Double discount = 0d;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "CUSTOMER_ID", nullable = false)
 	private Customer customer;
 	@OneToOne
@@ -150,7 +153,7 @@ public class Order {
 	@Override
 	public String toString() {
 		return "Order [id=" + id + ", state=" + state + ", price=" + price + ", discount=" + discount + ", address="
-				+ address + "]";
+				+ address.getCity() + "]";
 	}
 	
 	

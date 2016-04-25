@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fusillade.domain.discounts.AccumulativeCard;
-import com.fusillade.domain.entity.impl.Customer;
+import com.fusillade.domain.entity.Customer;
 
 @Entity
 @Table(name = "PIZZASERVICE.ACCUMULATIVE_CARD")
@@ -22,8 +22,8 @@ public class AccumulativeCardDiscount implements AccumulativeCard {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private Double sum = 0d;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "CUSTOMER_ID", nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "CUSTOMER_ID")
 	private Customer customer;
 
 	public AccumulativeCardDiscount() {

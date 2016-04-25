@@ -1,7 +1,18 @@
 package com.fusillade.repository;
 
-import com.fusillade.domain.entity.impl.Order;
+import java.util.List;
+
+import com.fusillade.domain.entity.Order;
 
 public interface OrderRepository {
-	int saveOrder(Order newOrder);
+
+	Order findById(int id);
+
+	void create(Order newOrder);
+
+	void update(Order order);
+
+	void delete(int id);
+
+	List<Order> getAll();
 }

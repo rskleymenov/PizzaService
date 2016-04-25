@@ -1,10 +1,9 @@
 package com.fusillade.service.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -13,11 +12,9 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.fusillade.domain.discounts.impl.AccumulativeCardDiscount;
-import com.fusillade.domain.entity.enums.PizzaType;
-import com.fusillade.domain.entity.impl.Address;
-import com.fusillade.domain.entity.impl.Customer;
-import com.fusillade.domain.entity.impl.Order;
-import com.fusillade.domain.entity.impl.Pizza;
+import com.fusillade.domain.entity.Address;
+import com.fusillade.domain.entity.Customer;
+import com.fusillade.domain.entity.Order;
 import com.fusillade.service.OrderService;
 
 public class SimpleOrderServiceTest {
@@ -35,28 +32,6 @@ public class SimpleOrderServiceTest {
 	@After
 	public void close() {
 		applicationContext.close();
-	}
-	
-	@Test
-	public void placeNewOrderShouldReturnSameObject() {
-		List<Pizza> listOfPizzas = new ArrayList<>();
-
-		listOfPizzas.add(new Pizza(1, "Vegan", 19.50, PizzaType.Vegetarian));
-		listOfPizzas.add(new Pizza(2, "Original", 20.50, PizzaType.Sea));
-		listOfPizzas.add(new Pizza(3, "AllMeat", 10.00, PizzaType.Meat));
-		listOfPizzas.add(new Pizza(4, "MeatBalls", 45.00, PizzaType.Meat));
-		listOfPizzas.add(new Pizza(5, "SeaGod", 5.00, PizzaType.Sea));
-
-		Address address = new Address("Kyiv", "12334");
-		AccumulativeCardDiscount accumulativeCard = new AccumulativeCardDiscount(50d);
-		Customer customer = new Customer("Roman", "Kleimenov", Arrays.asList(address));
-		Order expectedOrder = new Order(customer, listOfPizzas);
-
-		orderService.addAccumulativeCardToCustomer(customer, accumulativeCard);
-		Order actualOrder = orderService.placeNewOrder(customer, 1, 2, 3, 4, 5);
-		actualOrder.setId(2);
-		expectedOrder.setId(2);
-		assertEquals(expectedOrder, actualOrder);
 	}
 	
 	@Test

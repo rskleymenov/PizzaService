@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 
 import com.fusillade.domain.discounts.AccumulativeCard;
 import com.fusillade.domain.discounts.Discount;
-import com.fusillade.domain.entity.State;
-import com.fusillade.domain.entity.impl.Customer;
-import com.fusillade.domain.entity.impl.Order;
-import com.fusillade.domain.entity.impl.Pizza;
-import com.fusillade.domain.entity.states.CancelledOrderState;
-import com.fusillade.domain.entity.states.DoneOrderState;
-import com.fusillade.domain.entity.states.InProgressOrderState;
+import com.fusillade.domain.entity.Customer;
+import com.fusillade.domain.entity.Order;
+import com.fusillade.domain.entity.Pizza;
+import com.fusillade.domain.states.State;
+import com.fusillade.domain.states.impl.CancelledOrderState;
+import com.fusillade.domain.states.impl.DoneOrderState;
+import com.fusillade.domain.states.impl.InProgressOrderState;
 import com.fusillade.repository.OrderRepository;
 import com.fusillade.repository.PizzaRepository;
 import com.fusillade.service.AccumulativeCardService;
@@ -58,7 +58,7 @@ public class SimpleOrderService implements OrderService {
 		List<Pizza> pizzas = new ArrayList<>();
 
 		for (Integer id : pizzasID) {
-			pizzas.add(pizzaRepository.getPizzaByID(id));
+			pizzas.add(pizzaRepository.findById(id));
 		}
 		return pizzas;
 	}
@@ -70,7 +70,7 @@ public class SimpleOrderService implements OrderService {
 		Order newOrder = createOrder();
 		newOrder.setCustomer(customer);
 		newOrder.setListOfPizzas(pizzas);
-		orderRepository.saveOrder(newOrder);
+		orderRepository.create(newOrder);
 		return newOrder;
 	}
 

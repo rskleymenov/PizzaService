@@ -1,7 +1,7 @@
-package com.fusillade.domain.entity.states;
+package com.fusillade.domain.states.impl;
 
-import com.fusillade.domain.entity.State;
-import com.fusillade.domain.entity.impl.Order;
+import com.fusillade.domain.entity.Order;
+import com.fusillade.domain.states.State;
 
 public class CancelledOrderState implements State {
 

@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.fusillade.domain.discounts.AccumulativeCard;
 import com.fusillade.domain.discounts.Discount;
-import com.fusillade.domain.entity.impl.Customer;
-import com.fusillade.domain.entity.impl.Order;
-import com.fusillade.domain.entity.impl.Pizza;
+import com.fusillade.domain.entity.Customer;
+import com.fusillade.domain.entity.Order;
+import com.fusillade.domain.entity.Pizza;
 
 public interface OrderService {
 

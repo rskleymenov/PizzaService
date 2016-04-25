@@ -2,11 +2,11 @@ package com.fusillade.repository;
 
 import java.util.List;
 
-import com.fusillade.domain.entity.impl.Pizza;
+import com.fusillade.domain.entity.Pizza;
 
 public interface PizzaRepository {
 	
-	Pizza getPizzaByID(int id);
+	Pizza findById(int id);
 
 	void create(Pizza pizza);
 

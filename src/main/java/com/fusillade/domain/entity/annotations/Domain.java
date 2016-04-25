@@ -1,4 +1,4 @@
-package com.fusillade.domain.entity;
+package com.fusillade.domain.entity.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

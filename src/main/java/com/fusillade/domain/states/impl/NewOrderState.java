@@ -1,13 +1,13 @@
-package com.fusillade.domain.entity.states;
+package com.fusillade.domain.states.impl;
 
-import com.fusillade.domain.entity.State;
-import com.fusillade.domain.entity.impl.Order;
+import com.fusillade.domain.entity.Order;
+import com.fusillade.domain.states.State;
 
-public class InProgressOrderState implements State {
+public class NewOrderState implements State {
 
 	@Override
 	public boolean changeState(Order order) {
-		if (order.getState().getClass().equals(NewOrderState.class)) {
+		if (order.getState() == null) {
 			order.setState(this);
 			return true;
 		}
@@ -17,7 +17,7 @@ public class InProgressOrderState implements State {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "InProgressOrderState";
+		return "NewOrderState";
 	}
 
 	public boolean equals(Object object) {

@@ -17,15 +17,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.fusillade.domain.discounts.AccumulativeCard;
 import com.fusillade.domain.discounts.impl.AccumulativeCardDiscount;
 import com.fusillade.domain.discounts.impl.MaxPricePizzaDiscount;
-import com.fusillade.domain.entity.State;
 import com.fusillade.domain.entity.enums.PizzaType;
-import com.fusillade.domain.entity.impl.Customer;
-import com.fusillade.domain.entity.impl.Order;
-import com.fusillade.domain.entity.impl.Pizza;
-import com.fusillade.domain.entity.states.CancelledOrderState;
-import com.fusillade.domain.entity.states.DoneOrderState;
-import com.fusillade.domain.entity.states.InProgressOrderState;
-import com.fusillade.domain.entity.states.NewOrderState;
+import com.fusillade.domain.states.State;
+import com.fusillade.domain.states.impl.CancelledOrderState;
+import com.fusillade.domain.states.impl.DoneOrderState;
+import com.fusillade.domain.states.impl.InProgressOrderState;
+import com.fusillade.domain.states.impl.NewOrderState;
 import com.fusillade.service.OrderService;
 
 public class OrderTest {
@@ -56,9 +53,9 @@ public class OrderTest {
 
 	@Test
 	public void newOrderMustHaveNewState() {
-		List<Pizza> listOfPizzas = new ArrayList<>();
 		Customer customer = mock(Customer.class);
-		Order order = new Order(customer, listOfPizzas);
+		Address address = mock(Address.class);
+		Order order = new Order(50d, 50d, customer, address);
 		
 		assertEquals(new NewOrderState().getClass(), order.getState().getClass());
 	}
@@ -91,7 +88,8 @@ public class OrderTest {
 	public void changeCurrentOrderMustReturnTrue() {
 		List<Pizza> listOfPizzas = new ArrayList<>();
 		Customer customer = mock(Customer.class);
-		Order order = new Order(customer, listOfPizzas);
+		Address address = mock(Address.class);
+		Order order = new Order(50d, 50d, customer, address);
 		listOfPizzas.add(new Pizza(5, "SeaGod", 5.00, PizzaType.Sea));
 		
 		assertTrue(order.changeCurrentOrder(listOfPizzas));
@@ -101,7 +99,8 @@ public class OrderTest {
 	public void changeCurrentOrderMustReturnFalse() {
 		List<Pizza> listOfPizzas = new ArrayList<>();
 		Customer customer = mock(Customer.class);
-		Order order = new Order(customer, listOfPizzas);
+		Address address = mock(Address.class);
+		Order order = new Order(50d, 50d, customer, address);
 		State state = new InProgressOrderState();
 		state.changeState(order);
 		listOfPizzas.add(new Pizza(5, "SeaGod", 5.00, PizzaType.Sea));
@@ -111,17 +110,17 @@ public class OrderTest {
 
 	@Test
 	public void setInProgressOrderStatusShouldReturnTrue() {
-		List<Pizza> listOfPizzas = new ArrayList<>();
 		Customer customer = mock(Customer.class);
-		Order order = new Order(customer, listOfPizzas);
+		Address address = mock(Address.class);
+		Order order = new Order(50d, 50d, customer, address);
 		assertTrue(new InProgressOrderState().changeState(order));
 	}
 
 	@Test
 	public void setInProgressOrderStatusShouldReturnFalse() {
-		List<Pizza> listOfPizzas = new ArrayList<>();
 		Customer customer = mock(Customer.class);
-		Order order = new Order(customer, listOfPizzas);
+		Address address = mock(Address.class);
+		Order order = new Order(50d, 50d, customer, address);
 		State state = new CancelledOrderState();
 		state.changeState(order);
 		
@@ -130,18 +129,18 @@ public class OrderTest {
 
 	@Test
 	public void setCanceledOrderStatusShouldReturnTrueByFirstCondition() {
-		List<Pizza> listOfPizzas = new ArrayList<>();
 		Customer customer = mock(Customer.class);
-		Order order = new Order(customer, listOfPizzas);
+		Address address = mock(Address.class);
+		Order order = new Order(50d, 50d, customer, address);
 		
 		assertTrue(new CancelledOrderState().changeState(order));
 	}
 
 	@Test
 	public void setCanceledOrderStatusShouldReturnTrueBySecondCondition() {
-		List<Pizza> listOfPizzas = new ArrayList<>();
 		Customer customer = mock(Customer.class);
-		Order order = new Order(customer, listOfPizzas);
+		Address address = mock(Address.class);
+		Order order = new Order(50d, 50d, customer, address);
 
 		new InProgressOrderState().changeState(order);
 
@@ -150,9 +149,9 @@ public class OrderTest {
 
 	@Test
 	public void setCanceledOrderStatusShouldReturnFalse() {
-		List<Pizza> listOfPizzas = new ArrayList<>();
 		Customer customer = mock(Customer.class);
-		Order order = new Order(customer, listOfPizzas);
+		Address address = mock(Address.class);
+		Order order = new Order(50d, 50d, customer, address);
 		new InProgressOrderState().changeState(order);
 		new DoneOrderState().changeState(order);
 
@@ -161,9 +160,9 @@ public class OrderTest {
 
 	@Test
 	public void setDoneOrderStatusShouldReturnTrue() {
-		List<Pizza> listOfPizzas = new ArrayList<>();
 		Customer customer = mock(Customer.class);
-		Order order = new Order(customer, listOfPizzas);
+		Address address = mock(Address.class);
+		Order order = new Order(50d, 50d, customer, address);
 		new InProgressOrderState().changeState(order);
 		
 		assertTrue(new DoneOrderState().changeState(order));
@@ -171,9 +170,9 @@ public class OrderTest {
 
 	@Test
 	public void setDoneOrderStatusShouldReturnFalse() {
-		List<Pizza> listOfPizzas = new ArrayList<>();
 		Customer customer = mock(Customer.class);
-		Order order = new Order(customer, listOfPizzas);
+		Address address = mock(Address.class);
+		Order order = new Order(50d, 50d, customer, address);
 		
 		assertFalse(new DoneOrderState().changeState(order));
 	}

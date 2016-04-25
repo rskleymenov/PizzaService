@@ -8,9 +8,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.fusillade.domain.discounts.AccumulativeCard;
 import com.fusillade.domain.discounts.impl.AccumulativeCardDiscount;
 import com.fusillade.domain.discounts.impl.MaxPricePizzaDiscount;
-import com.fusillade.domain.entity.impl.Address;
-import com.fusillade.domain.entity.impl.Customer;
-import com.fusillade.domain.entity.impl.Order;
+import com.fusillade.domain.entity.Address;
+import com.fusillade.domain.entity.Customer;
+import com.fusillade.domain.entity.Order;
 import com.fusillade.service.OrderService;
 
 public class PizzaApp {

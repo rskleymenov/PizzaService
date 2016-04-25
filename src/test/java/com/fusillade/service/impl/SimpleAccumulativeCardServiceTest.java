@@ -6,7 +6,7 @@ import static org.mockito.Mockito.mock;
 import org.junit.Test;
 
 import com.fusillade.domain.discounts.AccumulativeCard;
-import com.fusillade.domain.entity.impl.Customer;
+import com.fusillade.domain.entity.Customer;
 import com.fusillade.service.AccumulativeCardService;
 import com.fusillade.service.impl.SimpleAccumulativeCardService;
 

@@ -1,7 +1,7 @@
 package com.fusillade.service;
 
 import com.fusillade.domain.discounts.AccumulativeCard;
-import com.fusillade.domain.entity.impl.Customer;
+import com.fusillade.domain.entity.Customer;
 
 public interface AccumulativeCardService {
 

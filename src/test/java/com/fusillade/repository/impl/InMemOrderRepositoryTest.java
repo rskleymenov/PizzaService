@@ -2,12 +2,12 @@ package com.fusillade.repository.impl;
 
 import org.junit.Test;
 
-import com.fusillade.repository.impl.InMemOrderRepository;
+import com.fusillade.repository.InMemRepositoryImpl.InMemOrderRepository;
 
 public class InMemOrderRepositoryTest {
 
 	@Test(expected = NullPointerException.class)
 	public void saveOrderShoudRiseNullPointerException() {
-		new InMemOrderRepository().saveOrder(null);
+		new InMemOrderRepository().create(null);
 	}
 }

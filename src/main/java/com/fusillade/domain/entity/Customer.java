@@ -1,4 +1,4 @@
-package com.fusillade.domain.entity.impl;
+package com.fusillade.domain.entity;
 
 import java.util.List;
 
@@ -25,13 +25,13 @@ public class Customer {
 	private int id;
 	private String name;
 	private String surname;
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinTable(name = "CUSTOMER_ADDRESS", joinColumns = { @JoinColumn(name = "CUSTOMER_ID") }, inverseJoinColumns = {
 			@JoinColumn(name = "ADDRESS_ID") })
 	private List<Address> addresses;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL, targetEntity = AccumulativeCardDiscount.class)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.PERSIST, targetEntity = AccumulativeCardDiscount.class)
 	private List<AccumulativeCard> accumulativeCards;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.PERSIST)
 	private List<Order> orders;
 
 	public Customer() {
@@ -99,4 +99,12 @@ public class Customer {
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}
+
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", name=" + name + ", surname=" + surname + ", addresses=" + addresses
+				+ ", accumulativeCards=" + accumulativeCards + ", orders=" + orders + "]";
+	}
+	
+	
 }

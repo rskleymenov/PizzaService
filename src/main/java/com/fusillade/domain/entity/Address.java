@@ -1,4 +1,4 @@
-package com.fusillade.domain.entity.impl;
+package com.fusillade.domain.entity;
 
 import java.util.List;
 
@@ -69,5 +69,12 @@ public class Address {
 	public void setCustomers(List<Customer> customers) {
 		this.customers = customers;
 	}
+
+	@Override
+	public String toString() {
+		return "Address [id=" + id + ", street=" + street + ", city=" + city  + "]";
+	}
+	
+	
 
 }

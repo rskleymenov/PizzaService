@@ -1,10 +1,10 @@
-package com.fusillade.repository.impl;
+package com.fusillade.repository.InMemRepositoryImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fusillade.domain.entity.Pizza;
 import com.fusillade.domain.entity.enums.PizzaType;
-import com.fusillade.domain.entity.impl.Pizza;
 import com.fusillade.repository.PizzaRepository;
 
 public class InMemPizzaRepository implements PizzaRepository {
@@ -21,7 +21,7 @@ public class InMemPizzaRepository implements PizzaRepository {
 	 
 
 	@Override
-	public Pizza getPizzaByID(int id) {
+	public Pizza findById(int id) {
 		int index = id - 1;
 		return listOfPizzas.get(index);
 	}

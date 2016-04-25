@@ -1,4 +1,4 @@
-package com.fusillade.repository.impl;
+package com.fusillade.repository.JDBCRepositoryImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,11 +14,11 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import com.fusillade.domain.entity.impl.Pizza;
+import com.fusillade.domain.entity.Pizza;
 import com.fusillade.repository.PizzaRepository;
 
 @Repository
-public class JDBCPizzaDAO implements PizzaRepository {
+public class JDBCPizzaRepository implements PizzaRepository {
 
 	private JdbcTemplate jdbcTemplateObject;
 
@@ -50,7 +50,7 @@ public class JDBCPizzaDAO implements PizzaRepository {
 	}
 
 	@Override
-	public Pizza getPizzaByID(int id) {
+	public Pizza findById(int id) {
 		String sql = "SELECT * FROM pizzadb.pizzastore WHERE id = ?";
 		Pizza pizza = jdbcTemplateObject.queryForObject(sql, new Object[] { id }, new PizzaMapper());
 		return pizza;
