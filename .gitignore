@@ -1,1 +1,31 @@
-/target/
+# Directories #
+/build/
+/bin/
+target/
+ 
+# OS Files #
+.DS_Store
+ 
+*.class
+ 
+# Package Files #
+*.jar
+*.war
+*.ear
+*.db
+
+# Other #
+.settings
+.classpath
+.project
+.metadata
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+*.mwb
+local.properties
+.settings/
+.loadpath
+.recommenders
