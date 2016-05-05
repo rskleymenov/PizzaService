@@ -13,11 +13,7 @@ import com.fusillade.domain.entity.Order;
 import com.fusillade.repository.OrderRepository;
 
 @Repository
-@Transactional
-public class JPAOrderRepository implements OrderRepository {
-
-	@PersistenceContext
-	private EntityManager em;
+public class JPAOrderRepository extends JPA_GENERIC_SUKA implements OrderRepository {
 
 	@Override
 	public Order findById(int id) {

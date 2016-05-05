@@ -13,7 +13,7 @@ import com.fusillade.domain.entity.enums.PizzaType;
 import com.fusillade.repository.InMemRepositoryImpl.InMemPizzaRepository;
 
 public class InMemPizzaRepositoryTest {
-
+/*
 	private static List<Pizza> listOfPizzas = new ArrayList<>();
 
 	@Before
@@ -35,5 +35,5 @@ public class InMemPizzaRepositoryTest {
 	@Test(expected = ArrayIndexOutOfBoundsException.class)
 	public void getPizzaByIDShoudRiseException() {
 		 new InMemPizzaRepository().findById(0);
-	}
+	}*/
 }

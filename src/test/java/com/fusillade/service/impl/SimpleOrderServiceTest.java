@@ -18,7 +18,7 @@ import com.fusillade.domain.entity.Order;
 import com.fusillade.service.OrderService;
 
 public class SimpleOrderServiceTest {
-	ConfigurableApplicationContext applicationContext;
+/*	ConfigurableApplicationContext applicationContext;
 	OrderService orderService;
 	
 	@Before
@@ -94,7 +94,7 @@ public class SimpleOrderServiceTest {
 		orderService.addAccumulativeCardToCustomer(customer, accumulativeCard);
 		assertFalse(orderService.setOrderInDoneState(order));
 	}
-	
+	*/
 	
 	
 }

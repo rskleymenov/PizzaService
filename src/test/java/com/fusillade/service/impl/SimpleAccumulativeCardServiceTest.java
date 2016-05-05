@@ -12,12 +12,12 @@ import com.fusillade.service.impl.SimpleAccumulativeCardService;
 
 public class SimpleAccumulativeCardServiceTest {
 
-	@Test
+/*	@Test
 	public void getCardByCustomerShoudReturnAddedCard() {
 		AccumulativeCardService accumulativeCardService = new SimpleAccumulativeCardService();
 		Customer customer = mock(Customer.class);
 		AccumulativeCard accumulativeCard = mock(AccumulativeCard.class);
 		accumulativeCardService.addAccumulativeCardToCustomer(customer, accumulativeCard);
 		assertEquals(accumulativeCard, accumulativeCardService.getCardByCustomer(customer));
-	}
+	}*/
 }

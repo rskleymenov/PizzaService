@@ -9,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -58,12 +57,11 @@ public class Order {
 		this.state = new NewOrderState();
 	}
 
-	public Order(Double price, Double discount, Customer customer, Address address) {
+	public Order(Double price, Double discount, Customer customer) {
 		this();
 		this.price = price;
 		this.discount = discount;
 		this.customer = customer;
-		this.address = address;
 	}
 
 	public boolean changeCurrentOrder(List<Pizza> listOfPizzas) {

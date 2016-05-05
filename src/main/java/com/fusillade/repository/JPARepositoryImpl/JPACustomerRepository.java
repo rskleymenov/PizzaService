@@ -12,11 +12,7 @@ import com.fusillade.domain.entity.Customer;
 import com.fusillade.repository.CustomerRepository;
 
 @Repository
-@Transactional
-public class JPACustomerRepository implements CustomerRepository {
-	
-	@PersistenceContext
-	private EntityManager em;
+public class JPACustomerRepository extends JPA_GENERIC_SUKA implements CustomerRepository {
 
 	@Override
 	@Transactional(readOnly = true)

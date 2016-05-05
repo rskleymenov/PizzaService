@@ -6,8 +6,8 @@ import com.fusillade.repository.InMemRepositoryImpl.InMemOrderRepository;
 
 public class InMemOrderRepositoryTest {
 
-	@Test(expected = NullPointerException.class)
+/*	@Test(expected = NullPointerException.class)
 	public void saveOrderShoudRiseNullPointerException() {
 		new InMemOrderRepository().create(null);
-	}
+	}*/
 }

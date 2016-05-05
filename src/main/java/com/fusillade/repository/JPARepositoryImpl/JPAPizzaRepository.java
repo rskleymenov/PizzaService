@@ -12,14 +12,9 @@ import com.fusillade.domain.entity.Pizza;
 import com.fusillade.repository.PizzaRepository;
 
 @Repository
-@Transactional
-public class JPAPizzaRepository implements PizzaRepository {
+public class JPAPizzaRepository extends JPA_GENERIC_SUKA implements PizzaRepository {
 	
-	@PersistenceContext
-	private EntityManager em;
-
 	@Override
-	@Transactional(readOnly = true)
 	public Pizza findById(int id) {
 		return em.find(Pizza.class, id);
 	}

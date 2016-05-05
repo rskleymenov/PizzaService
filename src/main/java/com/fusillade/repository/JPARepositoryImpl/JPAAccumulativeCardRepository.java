@@ -12,12 +12,8 @@ import com.fusillade.domain.discounts.impl.AccumulativeCardDiscount;
 import com.fusillade.repository.AccumulativeCardRepository;
 
 @Repository
-@Transactional
-public class JPAAccumulativeCardRepository implements AccumulativeCardRepository{
+public class JPAAccumulativeCardRepository extends JPA_GENERIC_SUKA implements AccumulativeCardRepository{
 	
-	@PersistenceContext
-	private EntityManager em;
-
 	@Override
 	@Transactional(readOnly = true)
 	public AccumulativeCardDiscount findById(int id) {

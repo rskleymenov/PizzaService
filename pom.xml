@@ -18,7 +18,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 		<checkstyle.skip>false</checkstyle.skip>
 		<findbugs.skip>false</findbugs.skip>
 		<checkstyle.config.location>checkstyle.xml</checkstyle.config.location>
-		<org.springframework.version>4.2.5.RELEASE</org.springframework.version>
+		<org.springframework.version>4.2.4.RELEASE</org.springframework.version>
 	</properties>
 
 	<dependencies>

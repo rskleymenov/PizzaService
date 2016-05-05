@@ -24,7 +24,7 @@ import com.fusillade.service.impl.SimpleAccumulativeCardService;
 import com.fusillade.service.impl.SimpleDiscountService;
 
 public class SimpleDiscountServiceTest {
-	ConfigurableApplicationContext applicationContext;
+	/*ConfigurableApplicationContext applicationContext;
 	OrderService orderService;
 	
 	@Before
@@ -96,5 +96,5 @@ public class SimpleDiscountServiceTest {
 				return 5d;
 			}
 		}));
-	}
+	}*/
 }

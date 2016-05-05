@@ -26,7 +26,6 @@ import com.fusillade.service.DiscountService;
 import com.fusillade.service.OrderService;
 
 @Service
-@Scope("prototype")
 public class SimpleOrderService implements OrderService {
 	OrderRepository orderRepository;
 	PizzaRepository pizzaRepository;
@@ -72,6 +71,7 @@ public class SimpleOrderService implements OrderService {
 		return placeNewOrder(customer, null, pizzasID);
 	}
 	
+	
 	public Order placeNewOrder(Customer customer, Address orderAddress, Integer... pizzasID) {
 		checkNumberOfPizzas(pizzasID);
 		List<Pizza> pizzas = pizzasByArrOfId(pizzasID);
@@ -79,7 +79,7 @@ public class SimpleOrderService implements OrderService {
 		newOrder.setCustomer(customer);
 		newOrder.setListOfPizzas(pizzas);
 		newOrder.setAddress(orderAddress);
-		orderRepository.create(newOrder);
+		orderRepository.update(newOrder);
 		return newOrder;
 	}
 

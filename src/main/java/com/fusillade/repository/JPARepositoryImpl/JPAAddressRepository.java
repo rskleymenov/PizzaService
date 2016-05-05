@@ -12,11 +12,7 @@ import com.fusillade.domain.entity.Address;
 import com.fusillade.repository.AddressRepository;
 
 @Repository
-@Transactional
-public class JPAAddressRepository implements AddressRepository {
-	
-	@PersistenceContext
-	private EntityManager em;
+public class JPAAddressRepository extends JPA_GENERIC_SUKA implements AddressRepository {
 
 	@Override
 	public Address findById(int id) {
