@@ -30,7 +30,7 @@ public class JPAWithoutSpring {
 		customer.setAccumulativeCards(Arrays.asList(accumulativeCard1, accumulativeCard2));
 
 		try {
-			for (AccumulativeCardDiscount accumulativeCardDiscount : new JPAAccumulativeCardRepository(em).getAll()){
+			for (AccumulativeCardDiscount accumulativeCardDiscount : new JPAAccumulativeCardRepository().getAll()){
 				System.out.println(accumulativeCardDiscount);
 			}
 		} finally {

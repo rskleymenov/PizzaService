@@ -12,12 +12,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
 
 import com.fusillade.domain.entity.Pizza;
 import com.fusillade.repository.PizzaRepository;
 
-@Repository
 public class JDBCPizzaRepository implements PizzaRepository {
 
 	private JdbcTemplate jdbcTemplateObject;

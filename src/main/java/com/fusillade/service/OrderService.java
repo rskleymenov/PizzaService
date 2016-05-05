@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fusillade.domain.discounts.AccumulativeCard;
 import com.fusillade.domain.discounts.Discount;
+import com.fusillade.domain.entity.Address;
 import com.fusillade.domain.entity.Customer;
 import com.fusillade.domain.entity.Order;
 import com.fusillade.domain.entity.Pizza;
@@ -13,6 +14,8 @@ public interface OrderService {
 	List<Pizza> pizzasByArrOfId(Integer... pizzasID);
 
 	Order placeNewOrder(Customer customer, Integer... pizzasID);
+	
+	Order placeNewOrder(Customer customer, Address orderAddress, Integer... pizzasID);
 
 	boolean addDiscounts(Discount... discounts);
 
@@ -28,8 +31,8 @@ public interface OrderService {
 
 	void applyDiscountsToOrder(Order newOrder);
 	
-	public void addAccumulativeCardToCustomer(Customer customer, AccumulativeCard accumulativeCard);
+	void addAccumulativeCardToCustomer(Customer customer, AccumulativeCard accumulativeCard);
 	
-	public AccumulativeCard getCardByCustomer(Customer customer);
+	AccumulativeCard getCardByCustomer(Customer customer);
 
 }

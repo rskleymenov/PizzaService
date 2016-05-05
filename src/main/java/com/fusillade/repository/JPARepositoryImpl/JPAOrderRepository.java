@@ -3,27 +3,21 @@ package com.fusillade.repository.JPARepositoryImpl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.fusillade.domain.entity.Address;
 import com.fusillade.domain.entity.Order;
 import com.fusillade.repository.OrderRepository;
 
+@Repository
+@Transactional
 public class JPAOrderRepository implements OrderRepository {
+
+	@PersistenceContext
 	private EntityManager em;
-
-	public JPAOrderRepository() {
-	}
-
-	public JPAOrderRepository(EntityManager em) {
-		this.em = em;
-	}
-
-	public EntityManager getEm() {
-		return em;
-	}
-
-	public void setEm(EntityManager em) {
-		this.em = em;
-	}
 
 	@Override
 	public Order findById(int id) {
@@ -32,26 +26,18 @@ public class JPAOrderRepository implements OrderRepository {
 
 	@Override
 	public void create(Order newOrder) {
-		em.getTransaction().begin();
 		em.persist(newOrder);
-		em.getTransaction().commit();
 	}
 
 	@Override
 	public void update(Order order) {
-		em.getTransaction().begin();
 		em.merge(order);
-		em.getTransaction().commit();
-
 	}
 
 	@Override
 	public void delete(int id) {
 		Order order = findById(id);
-		em.getTransaction().begin();
 		em.remove(order);
-		em.getTransaction().commit();
-
 	}
 
 	@Override

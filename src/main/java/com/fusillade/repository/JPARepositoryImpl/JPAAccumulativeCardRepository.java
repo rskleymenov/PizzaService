@@ -3,58 +3,47 @@ package com.fusillade.repository.JPARepositoryImpl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fusillade.domain.discounts.impl.AccumulativeCardDiscount;
 import com.fusillade.repository.AccumulativeCardRepository;
 
+@Repository
+@Transactional
 public class JPAAccumulativeCardRepository implements AccumulativeCardRepository{
+	
+	@PersistenceContext
 	private EntityManager em;
 
-	public JPAAccumulativeCardRepository() {
-	}
-
-	public JPAAccumulativeCardRepository(EntityManager em) {
-		this.em = em;
-	}
-
-	public EntityManager getEm() {
-		return em;
-	}
-
-	public void setEm(EntityManager em) {
-		this.em = em;
-	}
-
 	@Override
+	@Transactional(readOnly = true)
 	public AccumulativeCardDiscount findById(int id) {
 		return em.find(AccumulativeCardDiscount.class, id);
 	}
 
 	@Override
 	public void create(AccumulativeCardDiscount accumulativeCard) {
-		em.getTransaction().begin();
-		em.persist(accumulativeCard);
-		em.getTransaction().commit();		
+		em.persist(accumulativeCard);	
 	}
 
 	@Override
 	public void update(AccumulativeCardDiscount accumulativeCard) {
-		em.getTransaction().begin();
 		em.merge(accumulativeCard);
-		em.getTransaction().commit();	
 		
 	}
 
 	@Override
 	public void delete(int id) {
 		AccumulativeCardDiscount accumulativeCard = findById(id);
-		em.getTransaction().begin();
 		em.remove(accumulativeCard);
-		em.getTransaction().commit();	
 		
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<AccumulativeCardDiscount> getAll() {
 		return em.createQuery("select a from AccumulativeCardDiscount a", AccumulativeCardDiscount.class).getResultList();
 	}

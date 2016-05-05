@@ -25,13 +25,13 @@ public class Customer {
 	private int id;
 	private String name;
 	private String surname;
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinTable(name = "CUSTOMER_ADDRESS", joinColumns = { @JoinColumn(name = "CUSTOMER_ID") }, inverseJoinColumns = {
 			@JoinColumn(name = "ADDRESS_ID") })
 	private List<Address> addresses;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.PERSIST, targetEntity = AccumulativeCardDiscount.class)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, targetEntity = AccumulativeCardDiscount.class)
 	private List<AccumulativeCard> accumulativeCards;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.PERSIST)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private List<Order> orders;
 
 	public Customer() {
@@ -50,6 +50,17 @@ public class Customer {
 		this.name = name;
 		this.surname = surname;
 		this.addresses = addresses;
+	}
+	
+
+	public Customer(String name, String surname, List<Address> addresses, List<AccumulativeCard> accumulativeCards,
+			List<Order> orders) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.addresses = addresses;
+		this.accumulativeCards = accumulativeCards;
+		this.orders = orders;
 	}
 
 	public int getId() {

@@ -5,10 +5,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Lookup;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fusillade.domain.discounts.AccumulativeCard;
 import com.fusillade.domain.discounts.Discount;
+import com.fusillade.domain.entity.Address;
 import com.fusillade.domain.entity.Customer;
 import com.fusillade.domain.entity.Order;
 import com.fusillade.domain.entity.Pizza;
@@ -23,6 +26,7 @@ import com.fusillade.service.DiscountService;
 import com.fusillade.service.OrderService;
 
 @Service
+@Scope("prototype")
 public class SimpleOrderService implements OrderService {
 	OrderRepository orderRepository;
 	PizzaRepository pizzaRepository;
@@ -65,11 +69,16 @@ public class SimpleOrderService implements OrderService {
 
 	@Override
 	public Order placeNewOrder(Customer customer, Integer... pizzasID) {
+		return placeNewOrder(customer, null, pizzasID);
+	}
+	
+	public Order placeNewOrder(Customer customer, Address orderAddress, Integer... pizzasID) {
 		checkNumberOfPizzas(pizzasID);
 		List<Pizza> pizzas = pizzasByArrOfId(pizzasID);
 		Order newOrder = createOrder();
 		newOrder.setCustomer(customer);
 		newOrder.setListOfPizzas(pizzas);
+		newOrder.setAddress(orderAddress);
 		orderRepository.create(newOrder);
 		return newOrder;
 	}

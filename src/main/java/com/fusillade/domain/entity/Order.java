@@ -21,13 +21,13 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-import com.fusillade.domain.entity.annotations.Domain;
 import com.fusillade.domain.states.State;
 import com.fusillade.domain.states.impl.NewOrderState;
 import com.fusillade.domain.states.impl.OrderStateConverter;
 
-@Domain
+@Component
 @Scope("prototype")
 @Entity
 @Table(name = "PIZZASERVICE.ORDER")
@@ -41,10 +41,10 @@ public class Order {
 	private State state;
 	private Double price = 0d;
 	private Double discount = 0d;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "CUSTOMER_ID", nullable = false)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@JoinColumn(name = "CUSTOMER_ID")
 	private Customer customer;
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "ADDRESS_ID")
 	private Address address;
 	@ElementCollection

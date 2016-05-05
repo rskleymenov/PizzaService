@@ -3,27 +3,20 @@ package com.fusillade.repository.JPARepositoryImpl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fusillade.domain.entity.Address;
 import com.fusillade.repository.AddressRepository;
 
+@Repository
+@Transactional
 public class JPAAddressRepository implements AddressRepository {
+	
+	@PersistenceContext
 	private EntityManager em;
-
-	public JPAAddressRepository() {
-	}
-
-	public JPAAddressRepository(EntityManager em) {
-		this.em = em;
-	}
-
-	public EntityManager getEm() {
-		return em;
-	}
-
-	public void setEm(EntityManager em) {
-		this.em = em;
-	}
 
 	@Override
 	public Address findById(int id) {
@@ -32,26 +25,18 @@ public class JPAAddressRepository implements AddressRepository {
 
 	@Override
 	public void create(Address address) {
-		em.getTransaction().begin();
 		em.persist(address);
-		em.getTransaction().commit();
 	}
 
 	@Override
 	public void update(Address address) {
-		em.getTransaction().begin();
 		em.merge(address);
-		em.getTransaction().commit();
-
 	}
 
 	@Override
 	public void delete(int id) {
 		Address address = findById(id);
-		em.getTransaction().begin();
 		em.remove(address);
-		em.getTransaction().commit();
-
 	}
 
 	@Override
