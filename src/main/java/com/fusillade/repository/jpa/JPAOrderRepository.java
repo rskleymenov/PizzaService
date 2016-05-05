@@ -1,4 +1,4 @@
-package com.fusillade.repository.JPARepositoryImpl;
+package com.fusillade.repository.jpa;
 
 import java.util.List;
 
@@ -8,12 +8,15 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fusillade.domain.entity.Address;
 import com.fusillade.domain.entity.Order;
 import com.fusillade.repository.OrderRepository;
 
 @Repository
-public class JPAOrderRepository extends JPA_GENERIC_SUKA implements OrderRepository {
+@Transactional
+public class JPAOrderRepository implements OrderRepository {
+	
+	@PersistenceContext
+	protected EntityManager em;
 
 	@Override
 	public Order findById(int id) {

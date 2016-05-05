@@ -6,16 +6,18 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fusillade.domain.entity.enums.PizzaType;
 
 @Entity
-@Table(name = "PIZZASERVICE.PIZZA")
+@Table(name = "PIZZAS")
 public class Pizza {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PIZZA_SEQ")
+	@SequenceGenerator(name = "PIZZA_SEQ", sequenceName = "PIZZA_SEQ", allocationSize = 1)
 	private int id;
 	private String name;
 	private Double price;

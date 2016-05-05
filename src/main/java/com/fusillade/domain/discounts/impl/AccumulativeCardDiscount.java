@@ -2,27 +2,28 @@ package com.fusillade.domain.discounts.impl;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fusillade.domain.discounts.AccumulativeCard;
 import com.fusillade.domain.entity.Customer;
 
 @Entity
-@Table(name = "PIZZASERVICE.ACCUMULATIVE_CARD")
+@Table(name = "ACCUMULATIVE_CARDS")
 public class AccumulativeCardDiscount implements AccumulativeCard {
 	private static final Double CARD_DISCOUNT = 0.1d;
 	private static final Double MAX_CARD_DISCOUNT = 0.3d;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ACCUMULATIVE_SEQ")
+	@SequenceGenerator(name = "ACCUMULATIVE_SEQ", sequenceName = "ACCUMULATIVE_SEQ", allocationSize = 1)
 	private int id;
 	private Double sum = 0d;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "CUSTOMER_ID")
 	private Customer customer;
 
@@ -86,7 +87,5 @@ public class AccumulativeCardDiscount implements AccumulativeCard {
 	public String toString() {
 		return "AccumulativeCardDiscount [id=" + id + ", sum=" + sum + ", customer=" + customer.getSurname() + "]";
 	}
-	
-	
 
 }

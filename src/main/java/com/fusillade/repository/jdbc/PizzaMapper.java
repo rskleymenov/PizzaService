@@ -1,4 +1,4 @@
-package com.fusillade.repository.JDBCRepositoryImpl;
+package com.fusillade.repository.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

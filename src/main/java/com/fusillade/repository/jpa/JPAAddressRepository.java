@@ -1,4 +1,4 @@
-package com.fusillade.repository.JPARepositoryImpl;
+package com.fusillade.repository.jpa;
 
 import java.util.List;
 
@@ -12,8 +12,12 @@ import com.fusillade.domain.entity.Address;
 import com.fusillade.repository.AddressRepository;
 
 @Repository
-public class JPAAddressRepository extends JPA_GENERIC_SUKA implements AddressRepository {
+@Transactional
+public class JPAAddressRepository implements AddressRepository {
 
+	@PersistenceContext
+	protected EntityManager em;
+	
 	@Override
 	public Address findById(int id) {
 		return em.find(Address.class, id);

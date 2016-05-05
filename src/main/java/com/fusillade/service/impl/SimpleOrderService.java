@@ -1,13 +1,12 @@
 package com.fusillade.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Lookup;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.fusillade.domain.discounts.AccumulativeCard;
 import com.fusillade.domain.discounts.Discount;
@@ -32,10 +31,10 @@ public class SimpleOrderService implements OrderService {
 	AccumulativeCardService cardService;
 	DiscountService discountService;
 
-	public SimpleOrderService(){
-		
+	public SimpleOrderService() {
+
 	}
-	
+
 	@Autowired
 	public SimpleOrderService(OrderRepository orderRepository, PizzaRepository pizzaRepository,
 			AccumulativeCardService simpleAccumulativeCardService, DiscountService discountService) {
@@ -45,9 +44,16 @@ public class SimpleOrderService implements OrderService {
 		this.cardService = simpleAccumulativeCardService;
 		this.discountService = discountService;
 	}
-	
-	private void checkNumberOfPizzas(Integer... pizzasID) {
-		if (!(pizzasID.length >= 1 && pizzasID.length <= 10))
+
+	private void checkNumberOfPizzas(Map<Pizza, Integer> pizzas) {
+		Integer numOfPizzas = 0;
+		Iterator<Entry<Pizza, Integer>> it = pizzas.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry<Pizza, Integer> pair = (Map.Entry<Pizza, Integer>) it.next();
+			numOfPizzas += pair.getValue();
+		}
+
+		if (!(numOfPizzas >= 1 && numOfPizzas <= 10))
 			throw new IllegalArgumentException();
 	}
 
@@ -57,24 +63,12 @@ public class SimpleOrderService implements OrderService {
 	}
 
 	@Override
-	public List<Pizza> pizzasByArrOfId(Integer... pizzasID) {
-		List<Pizza> pizzas = new ArrayList<>();
-
-		for (Integer id : pizzasID) {
-			pizzas.add(pizzaRepository.findById(id));
-		}
-		return pizzas;
+	public Order placeNewOrder(Customer customer, Map<Pizza, Integer> pizzas) {
+		return placeNewOrder(customer, null, pizzas);
 	}
 
-	@Override
-	public Order placeNewOrder(Customer customer, Integer... pizzasID) {
-		return placeNewOrder(customer, null, pizzasID);
-	}
-	
-	
-	public Order placeNewOrder(Customer customer, Address orderAddress, Integer... pizzasID) {
-		checkNumberOfPizzas(pizzasID);
-		List<Pizza> pizzas = pizzasByArrOfId(pizzasID);
+	public Order placeNewOrder(Customer customer, Address orderAddress, Map<Pizza, Integer> pizzas) {
+		checkNumberOfPizzas(pizzas);
 		Order newOrder = createOrder();
 		newOrder.setCustomer(customer);
 		newOrder.setListOfPizzas(pizzas);
@@ -100,8 +94,8 @@ public class SimpleOrderService implements OrderService {
 	}
 
 	@Override
-	public boolean changeOrder(Order order, Integer... pizzasID) {
-		return order.changeCurrentOrder(pizzasByArrOfId(pizzasID));
+	public boolean changeOrder(Order order, Map<Pizza, Integer> pizzas) {
+		return order.changeCurrentOrder(pizzas);
 	}
 
 	@Override

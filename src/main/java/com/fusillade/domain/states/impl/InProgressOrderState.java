@@ -16,7 +16,6 @@ public class InProgressOrderState implements State {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "InProgressOrderState";
 	}
 

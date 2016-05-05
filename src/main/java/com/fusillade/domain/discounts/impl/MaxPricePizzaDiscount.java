@@ -1,5 +1,9 @@
 package com.fusillade.domain.discounts.impl;
 
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import com.fusillade.domain.discounts.Discount;
 import com.fusillade.domain.entity.Order;
 import com.fusillade.domain.entity.Pizza;
@@ -30,8 +34,10 @@ public class MaxPricePizzaDiscount implements Discount {
 	}
 
 	private Double getMaxPriceOfPizza(Order order, Double maxPriceOfPizza) {
-		for (Pizza pizza : order.getListOfPizzas()) {
-			Double pizzaPrice = pizza.getPrice();
+		Iterator<Entry<Pizza, Integer>> it = order.getListOfPizzas().entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry<Pizza, Integer> pair = (Map.Entry<Pizza, Integer>) it.next();
+			Double pizzaPrice = pair.getKey().getPrice();
 			if (maxPriceOfPizza <= pizzaPrice) {
 				maxPriceOfPizza = pizzaPrice;
 			}

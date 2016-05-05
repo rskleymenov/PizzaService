@@ -1,4 +1,4 @@
-package com.fusillade.repository.JPARepositoryImpl;
+package com.fusillade.repository.jpa;
 
 import java.util.List;
 
@@ -12,7 +12,11 @@ import com.fusillade.domain.entity.Pizza;
 import com.fusillade.repository.PizzaRepository;
 
 @Repository
-public class JPAPizzaRepository extends JPA_GENERIC_SUKA implements PizzaRepository {
+@Transactional
+public class JPAPizzaRepository implements PizzaRepository {
+	
+	@PersistenceContext
+	protected EntityManager em;
 	
 	@Override
 	public Pizza findById(int id) {

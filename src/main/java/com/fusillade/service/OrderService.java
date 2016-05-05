@@ -1,6 +1,6 @@
 package com.fusillade.service;
 
-import java.util.List;
+import java.util.Map;
 
 import com.fusillade.domain.discounts.AccumulativeCard;
 import com.fusillade.domain.discounts.Discount;
@@ -11,17 +11,15 @@ import com.fusillade.domain.entity.Pizza;
 
 public interface OrderService {
 
-	List<Pizza> pizzasByArrOfId(Integer... pizzasID);
-
-	Order placeNewOrder(Customer customer, Integer... pizzasID);
+	Order placeNewOrder(Customer customer, Map<Pizza, Integer> pizzas);
 	
-	Order placeNewOrder(Customer customer, Address orderAddress, Integer... pizzasID);
+	Order placeNewOrder(Customer customer, Address orderAddress, Map<Pizza, Integer> pizzas);
 
 	boolean addDiscounts(Discount... discounts);
 
 	boolean deleteDiscount(Discount discount);
 
-	boolean changeOrder(Order order, Integer... pizzasID);
+	boolean changeOrder(Order order, Map<Pizza, Integer> pizzas);
 
 	boolean setOrderInProgressState(Order order);
 

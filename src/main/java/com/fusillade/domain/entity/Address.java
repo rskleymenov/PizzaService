@@ -2,23 +2,26 @@ package com.fusillade.domain.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "PIZZASERVICE.ADDRESS")
+@Table(name = "ADDRESSES")
 public class Address {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADDRESS_SEQ")
+	@SequenceGenerator(name = "ADDRESS_SEQ", sequenceName = "ADDRESS_SEQ", allocationSize = 1)
 	private int id;
 	private String street;
-	private String city;	
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "addresses")
+	private String city;
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "addresses", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<Customer> customers;
 
 	public Address() {
@@ -72,9 +75,7 @@ public class Address {
 
 	@Override
 	public String toString() {
-		return "Address [id=" + id + ", street=" + street + ", city=" + city  + "]";
+		return "Address [id=" + id + ", street=" + street + ", city=" + city + "]";
 	}
-	
-	
 
 }

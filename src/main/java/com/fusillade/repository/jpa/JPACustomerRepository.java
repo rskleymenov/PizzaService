@@ -1,4 +1,4 @@
-package com.fusillade.repository.JPARepositoryImpl;
+package com.fusillade.repository.jpa;
 
 import java.util.List;
 
@@ -12,8 +12,12 @@ import com.fusillade.domain.entity.Customer;
 import com.fusillade.repository.CustomerRepository;
 
 @Repository
-public class JPACustomerRepository extends JPA_GENERIC_SUKA implements CustomerRepository {
+@Transactional
+public class JPACustomerRepository implements CustomerRepository {
 
+	@PersistenceContext
+	protected EntityManager em;
+	
 	@Override
 	@Transactional(readOnly = true)
 	public Customer findById(int id) {

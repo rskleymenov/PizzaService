@@ -12,31 +12,33 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fusillade.domain.discounts.AccumulativeCard;
 import com.fusillade.domain.discounts.impl.AccumulativeCardDiscount;
 
 @Entity
-@Table(name = "PIZZASERVICE.CUSTOMER")
+@Table(name = "CUSTOMERS")
 public class Customer {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CUSTOMER_SEQ")
+	@SequenceGenerator(name = "CUSTOMER_SEQ", sequenceName = "CUSTOMER_SEQ", allocationSize = 1)
 	private int id;
 	private String name;
 	private String surname;
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "CUSTOMER_ADDRESS", joinColumns = { @JoinColumn(name = "CUSTOMER_ID") }, inverseJoinColumns = {
 			@JoinColumn(name = "ADDRESS_ID") })
 	private List<Address> addresses;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, targetEntity = AccumulativeCardDiscount.class)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = { CascadeType.PERSIST,
+			CascadeType.MERGE }, targetEntity = AccumulativeCardDiscount.class)
 	private List<AccumulativeCard> accumulativeCards;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<Order> orders;
 
 	public Customer() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Customer(String name, String surname) {
@@ -51,7 +53,6 @@ public class Customer {
 		this.surname = surname;
 		this.addresses = addresses;
 	}
-	
 
 	public Customer(String name, String surname, List<Address> addresses, List<AccumulativeCard> accumulativeCards,
 			List<Order> orders) {
@@ -116,6 +117,5 @@ public class Customer {
 		return "Customer [id=" + id + ", name=" + name + ", surname=" + surname + ", addresses=" + addresses
 				+ ", accumulativeCards=" + accumulativeCards + ", orders=" + orders + "]";
 	}
-	
-	
+
 }

@@ -1,7 +1,8 @@
 package com.fusillade.domain.entity;
 
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
@@ -9,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,8 +18,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -29,25 +31,24 @@ import com.fusillade.domain.states.impl.OrderStateConverter;
 @Component
 @Scope("prototype")
 @Entity
-@Table(name = "PIZZASERVICE.ORDER")
+@Table(name = "ORDERS")
 public class Order {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORDER_SEQ")
+	@SequenceGenerator(name = "ORDER_SEQ", sequenceName = "ORDER_SEQ", allocationSize = 1)
 	private int id;
-	@Transient
-	private List<Pizza> listOfPizzas;
 	@Convert(converter = OrderStateConverter.class)
 	private State state;
 	private Double price = 0d;
 	private Double discount = 0d;
-	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "CUSTOMER_ID")
 	private Customer customer;
-	@OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "ADDRESS_ID")
 	private Address address;
-	@ElementCollection
-	@CollectionTable(name = "pizzaservice.order_pizza")
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "ORDER_PIZZA")
 	@MapKeyJoinColumn(name = "PIZZA_ID")
 	@Column(name = "pizzas")
 	private Map<Pizza, Integer> pizzasInOrder;
@@ -64,9 +65,9 @@ public class Order {
 		this.customer = customer;
 	}
 
-	public boolean changeCurrentOrder(List<Pizza> listOfPizzas) {
+	public boolean changeCurrentOrder(Map<Pizza, Integer> pizzasInOrder) {
 		if (this.state.getClass() == NewOrderState.class) {
-			this.listOfPizzas = listOfPizzas;
+			this.pizzasInOrder = pizzasInOrder;
 			return true;
 		}
 		return false;
@@ -74,8 +75,10 @@ public class Order {
 
 	public Double getTotalPrice() {
 		Double totalPriceOfOrder = 0d;
-		for (Pizza pizza : listOfPizzas) {
-			totalPriceOfOrder += pizza.getPrice();
+		Iterator<Entry<Pizza, Integer>> it = pizzasInOrder.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry<Pizza, Integer> pair = (Map.Entry<Pizza, Integer>) it.next();
+			totalPriceOfOrder += pair.getKey().getPrice() * pair.getValue();
 		}
 		return totalPriceOfOrder;
 	}
@@ -100,12 +103,12 @@ public class Order {
 		this.id = id;
 	}
 
-	public List<Pizza> getListOfPizzas() {
-		return listOfPizzas;
+	public Map<Pizza, Integer> getListOfPizzas() {
+		return pizzasInOrder;
 	}
 
-	public void setListOfPizzas(List<Pizza> listOfPizzas) {
-		this.listOfPizzas = listOfPizzas;
+	public void setListOfPizzas(Map<Pizza, Integer> pizzasInOrder) {
+		this.pizzasInOrder = pizzasInOrder;
 	}
 
 	public Double getPrice() {
@@ -153,7 +156,5 @@ public class Order {
 		return "Order [id=" + id + ", state=" + state + ", price=" + price + ", discount=" + discount + ", address="
 				+ address.getCity() + "]";
 	}
-	
-	
 
 }
