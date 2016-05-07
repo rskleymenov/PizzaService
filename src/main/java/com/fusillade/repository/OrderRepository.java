@@ -8,9 +8,7 @@ public interface OrderRepository {
 
 	Order findById(int id);
 
-	void create(Order newOrder);
-
-	void update(Order order);
+	Order save(Order order);
 
 	void delete(int id);
 

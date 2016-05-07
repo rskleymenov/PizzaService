@@ -6,11 +6,16 @@ import java.util.Map;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.fusillade.domain.discounts.impl.DiscountCard;
 import com.fusillade.domain.entity.Address;
 import com.fusillade.domain.entity.Customer;
+import com.fusillade.domain.entity.Order;
 import com.fusillade.domain.entity.Pizza;
-import com.fusillade.repository.PizzaRepository;
+import com.fusillade.domain.entity.enums.PizzaType;
+import com.fusillade.service.CustomerService;
+import com.fusillade.service.DiscountService;
 import com.fusillade.service.OrderService;
+import com.fusillade.service.PizzaService;
 
 public class JPAWithSpringApp {
 	public static void main(String args[]) {
@@ -20,21 +25,35 @@ public class JPAWithSpringApp {
 		
 		
 		try {
-/*			OrderRepository orderRepository = (OrderRepository) applicationContext.getBean("JPAOrderRepository");
-			PizzaRepository pizzaRepository = (PizzaRepository) applicationContext.getBean("JPAPizzaRepository");
-			AddressRepository addressRepository = (AddressRepository) applicationContext.getBean("JPAAddressRepository");*/
 			
-			OrderService orderService = (OrderService) applicationContext.getBean("simpleOrderService");
-			PizzaRepository pizzaRepository = (PizzaRepository) applicationContext.getBean("JPAPizzaRepository");
+			OrderService orderService = applicationContext.getBean(OrderService.class);
+			PizzaService pizzaService = applicationContext.getBean(PizzaService.class);
+			CustomerService customerService = applicationContext.getBean(CustomerService.class);
+			DiscountService discountService = applicationContext.getBean(DiscountService.class);
 			
-			Customer customer = new Customer("Roman2", "Kleimenov2");
-			Address address = new Address("Parkova2", "Kyiv2");
+			Pizza pizza = new Pizza("new", 55d, PizzaType.Meat);
+			pizza = pizzaService.save(pizza);
+			Map<Pizza, Integer> pizzas = new HashMap<>();
+			pizzas.put(pizza, 2);
+			Customer customer = new Customer();
+			customer.setName("ROMAN"); customer.setSurname("KLMN");
+			customer = customerService.save(customer);
 			
-			Pizza pizza1 = pizzaRepository.findById(1);
-			Map<Pizza, Integer> pizzas = new HashMap<Pizza, Integer>();
-			pizzas.put(pizza1, 2);
 			
-			orderService.placeNewOrder(customer, address, pizzas);
+			DiscountCard discountCard = new DiscountCard(40d, customer);
+			discountService.save(discountCard);
+			
+			Order order = orderService.placeNewOrder(customer, new Address(), pizzas);
+			
+			order = orderService.findById(order.getId());
+			System.out.println(order);
+			orderService.setOrderInProgressState(order);
+			System.out.println(order);
+			orderService.applyDiscountsToOrder(order);
+			orderService.setOrderInDoneState(order);
+			System.out.println(order);
+			System.out.println(order.getCustomer().getAccumulativeCard());
+			
 		}catch (Exception e) {
 				e.printStackTrace();
 		} finally {

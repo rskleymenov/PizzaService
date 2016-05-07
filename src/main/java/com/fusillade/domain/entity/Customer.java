@@ -12,11 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.fusillade.domain.discounts.AccumulativeCard;
-import com.fusillade.domain.discounts.impl.AccumulativeCardDiscount;
+import com.fusillade.domain.discounts.impl.DiscountCard;
 
 @Entity
 @Table(name = "CUSTOMERS")
@@ -27,13 +27,12 @@ public class Customer {
 	private int id;
 	private String name;
 	private String surname;
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "CUSTOMER_ADDRESS", joinColumns = { @JoinColumn(name = "CUSTOMER_ID") }, inverseJoinColumns = {
 			@JoinColumn(name = "ADDRESS_ID") })
 	private List<Address> addresses;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = { CascadeType.PERSIST,
-			CascadeType.MERGE }, targetEntity = AccumulativeCardDiscount.class)
-	private List<AccumulativeCard> accumulativeCards;
+	@OneToOne(mappedBy = "customer", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE })
+	private DiscountCard accumulativeCard;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<Order> orders;
 
@@ -54,13 +53,13 @@ public class Customer {
 		this.addresses = addresses;
 	}
 
-	public Customer(String name, String surname, List<Address> addresses, List<AccumulativeCard> accumulativeCards,
+	public Customer(String name, String surname, List<Address> addresses, DiscountCard accumulativeCard,
 			List<Order> orders) {
 		super();
 		this.name = name;
 		this.surname = surname;
 		this.addresses = addresses;
-		this.accumulativeCards = accumulativeCards;
+		this.accumulativeCard = accumulativeCard;
 		this.orders = orders;
 	}
 
@@ -96,14 +95,6 @@ public class Customer {
 		this.addresses = addresses;
 	}
 
-	public List<AccumulativeCard> getAccumulativeCards() {
-		return accumulativeCards;
-	}
-
-	public void setAccumulativeCards(List<AccumulativeCard> accumulativeCards) {
-		this.accumulativeCards = accumulativeCards;
-	}
-
 	public List<Order> getOrders() {
 		return orders;
 	}
@@ -112,10 +103,18 @@ public class Customer {
 		this.orders = orders;
 	}
 
+	public DiscountCard getAccumulativeCard() {
+		return accumulativeCard;
+	}
+
+	public void setAccumulativeCard(DiscountCard accumulativeCard) {
+		this.accumulativeCard = accumulativeCard;
+	}
+
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", name=" + name + ", surname=" + surname + ", addresses=" + addresses
-				+ ", accumulativeCards=" + accumulativeCards + ", orders=" + orders + "]";
+				+ ", AccumulativeCardDiscount=" + accumulativeCard + ", orders=" + orders + "]";
 	}
 
 }

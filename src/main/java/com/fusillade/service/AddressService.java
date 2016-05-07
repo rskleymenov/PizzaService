@@ -1,10 +1,10 @@
-package com.fusillade.repository;
+package com.fusillade.service;
 
 import java.util.List;
 
 import com.fusillade.domain.entity.Address;
 
-public interface AddressRepository {
+public interface AddressService {
 	
 	Address findById(int id);
 
@@ -13,4 +13,5 @@ public interface AddressRepository {
 	void delete(int id);
 
 	List<Address> getAll();
+
 }

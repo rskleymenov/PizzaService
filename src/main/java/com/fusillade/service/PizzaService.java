@@ -1,10 +1,10 @@
-package com.fusillade.repository;
+package com.fusillade.service;
 
 import java.util.List;
 
 import com.fusillade.domain.entity.Pizza;
 
-public interface PizzaRepository {
+public interface PizzaService {
 	
 	Pizza findById(int id);
 
@@ -13,5 +13,5 @@ public interface PizzaRepository {
 	void delete(int id);
 
 	List<Pizza> getAll();
-
+	
 }

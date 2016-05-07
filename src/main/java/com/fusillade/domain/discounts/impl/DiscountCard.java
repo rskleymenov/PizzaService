@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -15,7 +15,7 @@ import com.fusillade.domain.entity.Customer;
 
 @Entity
 @Table(name = "ACCUMULATIVE_CARDS")
-public class AccumulativeCardDiscount implements AccumulativeCard {
+public class DiscountCard implements AccumulativeCard {
 	private static final Double CARD_DISCOUNT = 0.1d;
 	private static final Double MAX_CARD_DISCOUNT = 0.3d;
 	@Id
@@ -23,20 +23,20 @@ public class AccumulativeCardDiscount implements AccumulativeCard {
 	@SequenceGenerator(name = "ACCUMULATIVE_SEQ", sequenceName = "ACCUMULATIVE_SEQ", allocationSize = 1)
 	private int id;
 	private Double sum = 0d;
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinColumn(name = "CUSTOMER_ID")
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
+	@JoinColumn(name = "CUSTOMER_ID", unique = true, nullable = false)
 	private Customer customer;
 
-	public AccumulativeCardDiscount() {
+	public DiscountCard() {
 		super();
 	}
 
-	public AccumulativeCardDiscount(Double sum) {
+	public DiscountCard(Double sum) {
 		super();
 		this.sum = sum;
 	}
 
-	public AccumulativeCardDiscount(Double sum, Customer customer) {
+	public DiscountCard(Double sum, Customer customer) {
 		super();
 		this.sum = sum;
 		this.customer = customer;

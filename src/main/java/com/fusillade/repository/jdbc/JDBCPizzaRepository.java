@@ -26,7 +26,7 @@ public class JDBCPizzaRepository implements PizzaRepository {
 	}
 
 	@Override
-	public void create(Pizza pizza) {
+	public Pizza save(Pizza pizza) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		String sql = "INSERT INTO pizzadb.pizzastore "
 				+ "(NAME, PRICE, TYPE) VALUES (?, ?, CAST(? as pizzadb.pizzatype))";
@@ -45,6 +45,7 @@ public class JDBCPizzaRepository implements PizzaRepository {
 		}, keyHolder);
 
 		pizza.setId(keyHolder.getKey().intValue());
+		return pizza;
 	}
 
 	@Override
@@ -54,11 +55,6 @@ public class JDBCPizzaRepository implements PizzaRepository {
 		return pizza;
 	}
 
-	@Override
-	public void update(Pizza pizza) {
-		String SQL = "update pizzadb.pizzastore set name = ?, price = ?, type = CAST(? as pizzadb.pizzatype) where id = ?";
-		jdbcTemplateObject.update(SQL, pizza.getName(), pizza.getPrice(), pizza.getType().toString(), pizza.getId());
-	}
 
 	@Override
 	public void delete(int id) {

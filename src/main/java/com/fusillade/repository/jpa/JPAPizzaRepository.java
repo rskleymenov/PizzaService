@@ -24,13 +24,8 @@ public class JPAPizzaRepository implements PizzaRepository {
 	}
 
 	@Override
-	public void create(Pizza pizza) {
-		em.persist(pizza);
-	}
-
-	@Override
-	public void update(Pizza pizza) {
-		em.merge(pizza);
+	public Pizza save(Pizza pizza) {
+		return em.merge(pizza);
 	}
 
 	@Override

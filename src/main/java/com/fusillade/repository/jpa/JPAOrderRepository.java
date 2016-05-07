@@ -23,14 +23,10 @@ public class JPAOrderRepository implements OrderRepository {
 		return em.find(Order.class, id);
 	}
 
-	@Override
-	public void create(Order newOrder) {
-		em.persist(newOrder);
-	}
 
 	@Override
-	public void update(Order order) {
-		em.merge(order);
+	public Order save(Order order) {
+		return em.merge(order);
 	}
 
 	@Override

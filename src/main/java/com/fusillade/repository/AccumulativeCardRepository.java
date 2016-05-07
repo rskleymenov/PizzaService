@@ -2,17 +2,15 @@ package com.fusillade.repository;
 
 import java.util.List;
 
-import com.fusillade.domain.discounts.impl.AccumulativeCardDiscount;
+import com.fusillade.domain.discounts.impl.DiscountCard;
 
 public interface AccumulativeCardRepository {
 	
-	AccumulativeCardDiscount findById(int id);
+	DiscountCard findById(int id);
 
-	void create(AccumulativeCardDiscount accumulativeCard);
-
-	void update(AccumulativeCardDiscount accumulativeCard);
+	DiscountCard save(DiscountCard accumulativeCard);
 
 	void delete(int id);
 
-	List<AccumulativeCardDiscount> getAll();
+	List<DiscountCard> getAll();
 }

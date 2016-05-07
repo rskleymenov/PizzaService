@@ -17,7 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyJoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -44,7 +43,7 @@ public class Order {
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "CUSTOMER_ID")
 	private Customer customer;
-	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "ADDRESS_ID")
 	private Address address;
 	@ElementCollection(fetch = FetchType.EAGER)
@@ -80,6 +79,7 @@ public class Order {
 			Map.Entry<Pizza, Integer> pair = (Map.Entry<Pizza, Integer>) it.next();
 			totalPriceOfOrder += pair.getKey().getPrice() * pair.getValue();
 		}
+		this.price = totalPriceOfOrder;
 		return totalPriceOfOrder;
 	}
 
@@ -154,7 +154,7 @@ public class Order {
 	@Override
 	public String toString() {
 		return "Order [id=" + id + ", state=" + state + ", price=" + price + ", discount=" + discount + ", address="
-				+ address.getCity() + "]";
+				+ address.getId() + "]";
 	}
 
 }

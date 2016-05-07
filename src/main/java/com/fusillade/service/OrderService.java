@@ -2,7 +2,6 @@ package com.fusillade.service;
 
 import java.util.Map;
 
-import com.fusillade.domain.discounts.AccumulativeCard;
 import com.fusillade.domain.discounts.Discount;
 import com.fusillade.domain.entity.Address;
 import com.fusillade.domain.entity.Customer;
@@ -10,8 +9,6 @@ import com.fusillade.domain.entity.Order;
 import com.fusillade.domain.entity.Pizza;
 
 public interface OrderService {
-
-	Order placeNewOrder(Customer customer, Map<Pizza, Integer> pizzas);
 	
 	Order placeNewOrder(Customer customer, Address orderAddress, Map<Pizza, Integer> pizzas);
 
@@ -27,10 +24,9 @@ public interface OrderService {
 
 	boolean setOrderInDoneState(Order order);
 
-	void applyDiscountsToOrder(Order newOrder);
+	Order applyDiscountsToOrder(Order newOrder);
 	
-	void addAccumulativeCardToCustomer(Customer customer, AccumulativeCard accumulativeCard);
+	Order findById(int id);
 	
-	AccumulativeCard getCardByCustomer(Customer customer);
 
 }

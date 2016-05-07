@@ -1,10 +1,10 @@
-package com.fusillade.repository;
+package com.fusillade.service;
 
 import java.util.List;
 
 import com.fusillade.domain.entity.Customer;
 
-public interface CustomerRepository {
+public interface CustomerService {
 	
 	Customer findById(int id);
 

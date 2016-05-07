@@ -24,13 +24,8 @@ public class JPAAddressRepository implements AddressRepository {
 	}
 
 	@Override
-	public void create(Address address) {
-		em.persist(address);
-	}
-
-	@Override
-	public void update(Address address) {
-		em.merge(address);
+	public Address save(Address address) {
+		return em.merge(address);
 	}
 
 	@Override

@@ -17,7 +17,7 @@ public class JPACustomerRepository implements CustomerRepository {
 
 	@PersistenceContext
 	protected EntityManager em;
-	
+
 	@Override
 	@Transactional(readOnly = true)
 	public Customer findById(int id) {
@@ -25,13 +25,8 @@ public class JPACustomerRepository implements CustomerRepository {
 	}
 
 	@Override
-	public void create(Customer customer) {
-		em.persist(customer);
-	}
-
-	@Override
-	public void update(Customer customer) {
-		em.merge(customer);
+	public Customer save(Customer customer) {
+		return em.merge(customer);
 	}
 
 	@Override
