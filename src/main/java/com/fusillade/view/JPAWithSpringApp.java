@@ -1,21 +1,16 @@
 package com.fusillade.view;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.fusillade.domain.discounts.impl.DiscountCard;
-import com.fusillade.domain.entity.Address;
 import com.fusillade.domain.entity.Customer;
-import com.fusillade.domain.entity.Order;
-import com.fusillade.domain.entity.Pizza;
-import com.fusillade.domain.entity.enums.PizzaType;
+import com.fusillade.service.AddressService;
 import com.fusillade.service.CustomerService;
 import com.fusillade.service.DiscountService;
 import com.fusillade.service.OrderService;
 import com.fusillade.service.PizzaService;
+
+
 
 public class JPAWithSpringApp {
 	public static void main(String args[]) {
@@ -30,8 +25,9 @@ public class JPAWithSpringApp {
 			PizzaService pizzaService = applicationContext.getBean(PizzaService.class);
 			CustomerService customerService = applicationContext.getBean(CustomerService.class);
 			DiscountService discountService = applicationContext.getBean(DiscountService.class);
+			AddressService addressService = applicationContext.getBean(AddressService.class);
 			
-			Pizza pizza = new Pizza("new", 55d, PizzaType.Meat);
+/*			Pizza pizza = new Pizza("new", 55d, PizzaType.Meat);
 			pizza = pizzaService.save(pizza);
 			Map<Pizza, Integer> pizzas = new HashMap<>();
 			pizzas.put(pizza, 2);
@@ -41,18 +37,16 @@ public class JPAWithSpringApp {
 			
 			
 			DiscountCard discountCard = new DiscountCard(40d, customer);
-			discountService.save(discountCard);
+			discountService.save(discountCard);*/
 			
-			Order order = orderService.placeNewOrder(customer, new Address(), pizzas);
+			Customer customer = customerService.findById(5);
 			
-			order = orderService.findById(order.getId());
-			System.out.println(order);
-			orderService.setOrderInProgressState(order);
-			System.out.println(order);
-			orderService.applyDiscountsToOrder(order);
-			orderService.setOrderInDoneState(order);
-			System.out.println(order);
-			System.out.println(order.getCustomer().getAccumulativeCard());
+			System.out.println(customer.getOrders());
+			System.out.println(customer.getAccumulativeCard());
+		
+			
+
+			
 			
 		}catch (Exception e) {
 				e.printStackTrace();

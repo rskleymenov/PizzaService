@@ -1,6 +1,7 @@
 package com.fusillade.service.impl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -55,6 +56,7 @@ public class SimpleCustomerServiceTest {
 		Integer cId = keyHolder.getKey().intValue();
 
 		Customer actualCustomer = customerService.findById(cId);
+		assertNotNull(actualCustomer.getId());
 		assertEquals("Roman", actualCustomer.getName());
 		assertEquals("Serg", actualCustomer.getSurname());
 	}

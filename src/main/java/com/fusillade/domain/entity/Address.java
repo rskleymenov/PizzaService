@@ -1,14 +1,9 @@
 package com.fusillade.domain.entity;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -21,8 +16,6 @@ public class Address {
 	private int id;
 	private String street;
 	private String city;
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "addresses", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	private List<Customer> customers;
 
 	public Address() {
 		super();
@@ -32,13 +25,6 @@ public class Address {
 		super();
 		this.street = street;
 		this.city = city;
-	}
-
-	public Address(String street, String city, List<Customer> customers) {
-		super();
-		this.street = street;
-		this.city = city;
-		this.customers = customers;
 	}
 
 	public int getId() {
@@ -63,14 +49,6 @@ public class Address {
 
 	public void setCity(String city) {
 		this.city = city;
-	}
-
-	public List<Customer> getCustomers() {
-		return customers;
-	}
-
-	public void setCustomers(List<Customer> customers) {
-		this.customers = customers;
 	}
 
 	@Override

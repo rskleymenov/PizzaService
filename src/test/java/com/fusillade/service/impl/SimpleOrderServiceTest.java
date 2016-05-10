@@ -1,6 +1,6 @@
 package com.fusillade.service.impl;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,6 +26,7 @@ import com.fusillade.domain.entity.Customer;
 import com.fusillade.domain.entity.Order;
 import com.fusillade.domain.entity.Pizza;
 import com.fusillade.domain.entity.enums.PizzaType;
+import com.fusillade.domain.states.impl.CancelledOrderState;
 import com.fusillade.service.OrderService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -75,6 +76,37 @@ public class SimpleOrderServiceTest {
 		int custId = jdbcTemplate.queryForObject(custIdSQL, new Object[] { order.getId() }, Integer.class);
 		assertEquals(order.getAddress().getId(), addrId);
 		assertEquals(order.getCustomer().getId(), custId);
+	}
+	
+	@Test
+	public void testSetOrderInCancelledState() {
+		String sql = "INSERT INTO PIZZAS(ID, NAME, PRICE, TYPE) VALUES(PIZZA_SEQ.NEXTVAL, 'MEAT', 22.22, 'Meat')";
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				return con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			}
+		}, keyHolder);
+
+		int id = keyHolder.getKey().intValue();
+		Customer customer = new Customer("n", "s");
+		Address orderAddress = new Address("s", "c");
+		Map<Pizza, Integer> pizzas = new HashMap<>();
+
+		Pizza pizza = new Pizza();
+		pizza.setId(id);
+		pizza.setName("MEAT");
+		pizza.setPrice(22.22d);
+		pizza.setType(PizzaType.Meat);
+
+		pizzas.put(pizza, 3);
+
+		Order order = orderService.placeNewOrder(customer, orderAddress, pizzas);
+		boolean canceled= orderService.setOrderInCanceledState(order);
+		
+		assertTrue(canceled);
+		assertEquals(new CancelledOrderState(), orderService.findById(order.getId()).getState());
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.fusillade.domain.entity;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -27,14 +28,14 @@ public class Customer {
 	private int id;
 	private String name;
 	private String surname;
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "CUSTOMER_ADDRESS", joinColumns = { @JoinColumn(name = "CUSTOMER_ID") }, inverseJoinColumns = {
 			@JoinColumn(name = "ADDRESS_ID") })
 	private List<Address> addresses;
 	@OneToOne(mappedBy = "customer", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE })
 	private DiscountCard accumulativeCard;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	private List<Order> orders;
+	private Set<Order> orders;
 
 	public Customer() {
 		super();
@@ -54,7 +55,7 @@ public class Customer {
 	}
 
 	public Customer(String name, String surname, List<Address> addresses, DiscountCard accumulativeCard,
-			List<Order> orders) {
+			Set<Order> orders) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -95,11 +96,11 @@ public class Customer {
 		this.addresses = addresses;
 	}
 
-	public List<Order> getOrders() {
+	public Set<Order> getOrders() {
 		return orders;
 	}
 
-	public void setOrders(List<Order> orders) {
+	public void setOrders(Set<Order> orders) {
 		this.orders = orders;
 	}
 

@@ -19,14 +19,14 @@ import com.fusillade.domain.states.impl.CancelledOrderState;
 import com.fusillade.domain.states.impl.DoneOrderState;
 import com.fusillade.domain.states.impl.InProgressOrderState;
 import com.fusillade.repository.OrderRepository;
-import com.fusillade.repository.PizzaRepository;
 import com.fusillade.service.DiscountService;
 import com.fusillade.service.OrderService;
+import com.fusillade.service.PizzaService;
 
 @Service
 public class SimpleOrderService implements OrderService {
 	OrderRepository orderRepository;
-	PizzaRepository pizzaRepository;
+	PizzaService pizzaService;
 	DiscountService discountService;
 
 	public SimpleOrderService() {
@@ -34,10 +34,10 @@ public class SimpleOrderService implements OrderService {
 	}
 
 	@Autowired
-	public SimpleOrderService(OrderRepository orderRepository, PizzaRepository pizzaRepository, DiscountService discountService) {
+	public SimpleOrderService(OrderRepository orderRepository, PizzaService pizzaService, DiscountService discountService) {
 		super();
 		this.orderRepository = orderRepository;
-		this.pizzaRepository = pizzaRepository;
+		this.pizzaService = pizzaService;
 		this.discountService = discountService;
 	}
 

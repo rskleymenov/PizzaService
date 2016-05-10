@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,9 @@ public class JPACustomerRepository implements CustomerRepository {
 	@Override
 	@Transactional(readOnly = true)
 	public Customer findById(int id) {
-		return em.find(Customer.class, id);
+		Query query = em.createQuery("select c from Customer c LEFT JOIN FETCH c.addresses a LEFT JOIN FETCH c.orders ord WHERE c.id = :id");
+		query.setParameter("id", id);
+		return (Customer) query.getSingleResult();
 	}
 
 	@Override
