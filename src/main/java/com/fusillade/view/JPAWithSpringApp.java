@@ -1,5 +1,7 @@
 package com.fusillade.view;
 
+import java.util.Arrays;
+
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -39,12 +41,10 @@ public class JPAWithSpringApp {
 			DiscountCard discountCard = new DiscountCard(40d, customer);
 			discountService.save(discountCard);*/
 			
-			Customer customer = customerService.findById(5);
+			Customer customer = new Customer("123new", "das", Arrays.asList(addressService.findById(16)));
 			
-			System.out.println(customer.getOrders());
-			System.out.println(customer.getAccumulativeCard());
-		
-			
+
+			customerService.save(customer);
 
 			
 			

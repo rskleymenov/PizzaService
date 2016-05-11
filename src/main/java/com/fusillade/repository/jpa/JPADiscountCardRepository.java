@@ -6,13 +6,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.fusillade.domain.discounts.impl.DiscountCard;
 import com.fusillade.repository.AccumulativeCardRepository;
 
 @Repository
-@Transactional
 public class JPADiscountCardRepository implements AccumulativeCardRepository{
 	
 	@PersistenceContext
@@ -35,7 +33,6 @@ public class JPADiscountCardRepository implements AccumulativeCardRepository{
 	}
 
 	@Override
-	@Transactional(readOnly = true)
 	public List<DiscountCard> getAll() {
 		return em.createQuery("select a from DiscountCard a", DiscountCard.class).getResultList();
 	}

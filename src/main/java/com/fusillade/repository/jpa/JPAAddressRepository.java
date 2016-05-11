@@ -6,13 +6,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.fusillade.domain.entity.Address;
 import com.fusillade.repository.AddressRepository;
 
 @Repository
-@Transactional
 public class JPAAddressRepository implements AddressRepository {
 
 	@PersistenceContext

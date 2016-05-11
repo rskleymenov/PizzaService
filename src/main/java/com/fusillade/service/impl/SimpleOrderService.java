@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fusillade.domain.discounts.Discount;
 import com.fusillade.domain.discounts.impl.DiscountCard;
@@ -24,6 +25,7 @@ import com.fusillade.service.OrderService;
 import com.fusillade.service.PizzaService;
 
 @Service
+@Transactional
 public class SimpleOrderService implements OrderService {
 	OrderRepository orderRepository;
 	PizzaService pizzaService;

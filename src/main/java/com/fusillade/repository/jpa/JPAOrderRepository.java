@@ -6,13 +6,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.fusillade.domain.entity.Order;
 import com.fusillade.repository.OrderRepository;
 
 @Repository
-@Transactional
 public class JPAOrderRepository implements OrderRepository {
 	
 	@PersistenceContext

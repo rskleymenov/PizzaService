@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fusillade.domain.entity.Address;
 import com.fusillade.repository.AddressRepository;
 import com.fusillade.service.AddressService;
 
 @Service
+@Transactional
 public class SimpleAddressService implements AddressService{
 
 	@Autowired

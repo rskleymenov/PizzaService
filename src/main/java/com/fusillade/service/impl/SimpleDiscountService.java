@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fusillade.domain.discounts.AccumulativeCard;
 import com.fusillade.domain.discounts.Discount;
@@ -16,6 +17,7 @@ import com.fusillade.repository.AccumulativeCardRepository;
 import com.fusillade.service.DiscountService;
 
 @Service
+@Transactional
 public class SimpleDiscountService implements DiscountService {
 	
 	@Autowired
