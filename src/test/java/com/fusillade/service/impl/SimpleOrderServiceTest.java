@@ -1,6 +1,7 @@
 package com.fusillade.service.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,6 +22,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.fusillade.domain.discounts.impl.MaxPricePizzaDiscount;
 import com.fusillade.domain.entity.Address;
 import com.fusillade.domain.entity.Customer;
 import com.fusillade.domain.entity.Order;
@@ -79,6 +81,66 @@ public class SimpleOrderServiceTest {
 	}
 	
 	@Test
+	public void applyDiscountsToOrderTest() {
+		String sql = "INSERT INTO PIZZAS(ID, NAME, PRICE, TYPE) VALUES(PIZZA_SEQ.NEXTVAL, 'MEAT', 22.22, 'Meat')";
+		String sqlForOrder = "select discount from orders where orders.id = ?";
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				return con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			}
+		}, keyHolder);
+
+		int id = keyHolder.getKey().intValue();
+		Customer customer = new Customer("n", "s");
+		Address orderAddress = new Address("s", "c");
+		Map<Pizza, Integer> pizzas = new HashMap<>();
+
+		Pizza pizza = new Pizza();
+		pizza.setId(id);
+		pizzas.put(pizza, 4);
+
+		Order order = orderService.placeNewOrder(customer, orderAddress, pizzas);
+		orderService.addDiscounts(new MaxPricePizzaDiscount());
+		order = orderService.applyDiscountsToOrder(order);
+		
+		Double discount = jdbcTemplate.queryForObject(sqlForOrder, new Object[] {order.getId()}, Double.class);
+		assertEquals(Double.valueOf(6.66d), discount, 0.01);
+	}
+	
+	@Test
+	public void testChangeOrder() {
+		String sql = "INSERT INTO PIZZAS(ID, NAME, PRICE, TYPE) VALUES(PIZZA_SEQ.NEXTVAL, 'MEAT', 22.22, 'Meat')";
+		String selectUpdatedPizzas = "select pizzas from ORDER_PIZZA where ORDER_ID = ?";
+		Integer numberOfPizzasForUpdate = 22;
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				return con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			}
+		}, keyHolder);
+
+		int id = keyHolder.getKey().intValue();
+		Customer customer = new Customer("n", "s");
+		Address orderAddress = new Address("s", "c");
+		Map<Pizza, Integer> pizzas = new HashMap<>();
+
+		Pizza pizza = new Pizza();
+		pizza.setId(id);
+		pizzas.put(pizza, 4);
+
+		Order order = orderService.placeNewOrder(customer, orderAddress, pizzas);
+	
+		pizzas = new HashMap<>();
+		pizzas.put(pizza, numberOfPizzasForUpdate);
+		orderService.changeOrder(order, pizzas);
+		Integer numOfPizzas = jdbcTemplate.queryForObject(selectUpdatedPizzas, new Object[] {order.getId()}, Integer.class);
+		assertEquals(numberOfPizzasForUpdate, numOfPizzas);
+	}
+	
+	@Test
 	public void testSetOrderInCancelledState() {
 		String sql = "INSERT INTO PIZZAS(ID, NAME, PRICE, TYPE) VALUES(PIZZA_SEQ.NEXTVAL, 'MEAT', 22.22, 'Meat')";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -96,10 +158,6 @@ public class SimpleOrderServiceTest {
 
 		Pizza pizza = new Pizza();
 		pizza.setId(id);
-		pizza.setName("MEAT");
-		pizza.setPrice(22.22d);
-		pizza.setType(PizzaType.Meat);
-
 		pizzas.put(pizza, 3);
 
 		Order order = orderService.placeNewOrder(customer, orderAddress, pizzas);

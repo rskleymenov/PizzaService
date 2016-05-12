@@ -16,21 +16,27 @@ public class MaxPricePizzaDiscount implements Discount {
 	public Double calculateDiscount(Order order) {
 		Double maxPriceOfPizza = 0d;
 		Double discount = 0d;
-
-		if (order.getListOfPizzas().isEmpty() || order.getListOfPizzas().size() <= PIZZA_TRESHOLD)
+		if (order.getListOfPizzas().isEmpty() || getNumberOfPizzasInOrder(order) < PIZZA_TRESHOLD) {
 			return 0d;
-
+		}
 		maxPriceOfPizza = getMaxPriceOfPizza(order, maxPriceOfPizza);
-
-		discount = checkConditionOfCard(order, maxPriceOfPizza, discount);
+		discount = calcDisc(order, maxPriceOfPizza);
 		return discount;
 	}
-
-	private Double checkConditionOfCard(Order order, Double maxPriceOfPizza, Double discount) {
-		if (order.getListOfPizzas().size() > PIZZA_TRESHOLD) {
-			discount = maxPriceOfPizza * PIZZA_PERCENT_DISCOUNT;
+	
+	
+	private int getNumberOfPizzasInOrder(Order order) {
+		Iterator<Entry<Pizza, Integer>> it = order.getListOfPizzas().entrySet().iterator();
+		int size = 0;
+		while (it.hasNext()) {
+			Map.Entry<Pizza, Integer> pair = (Map.Entry<Pizza, Integer>) it.next();
+			size += pair.getValue();
 		}
-		return discount;
+		return size;
+	}
+
+	private Double calcDisc(Order order, Double maxPriceOfPizza) {
+			return maxPriceOfPizza * PIZZA_PERCENT_DISCOUNT;
 	}
 
 	private Double getMaxPriceOfPizza(Order order, Double maxPriceOfPizza) {

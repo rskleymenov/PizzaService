@@ -43,6 +43,7 @@ public class SimpleOrderService implements OrderService {
 		this.discountService = discountService;
 	}
 
+	@Transactional(readOnly = true)
 	private void checkNumberOfPizzas(Map<Pizza, Integer> pizzas) {
 		Integer numOfPizzas = 0;
 		Iterator<Entry<Pizza, Integer>> it = pizzas.entrySet().iterator();

@@ -26,6 +26,7 @@ public class SimpleDiscountService implements DiscountService {
 	private Set<Discount> discountSet = new LinkedHashSet<>();
 
 	@Override
+	@Transactional(readOnly = true)
 	public Double calculateDiscount(Order order) {
 		Double totalDiscount = 0d;
 		Double cardDiscount = 0d;
@@ -34,6 +35,7 @@ public class SimpleDiscountService implements DiscountService {
 		return totalDiscount + cardDiscount;
 	}
 
+	@Transactional(readOnly = true)
 	private Double calculateAccumulativeCardDiscount(Double totalPrice, Customer customer) {
 		AccumulativeCard accumulativeCard = customer.getAccumulativeCard();
 		if (accumulativeCard != null) {
@@ -41,7 +43,8 @@ public class SimpleDiscountService implements DiscountService {
 		}
 		return 0d;
 	}
-
+	
+	@Transactional(readOnly = true)
 	private Double calculateTotalDiscount(Order order, Double totalDiscount) {
 		for (Discount discount : discountSet) {
 			totalDiscount += discount.calculateDiscount(order);
@@ -50,6 +53,7 @@ public class SimpleDiscountService implements DiscountService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public boolean addDiscounts(Discount... discounts) {
 		if (discounts != null)
 			if (discounts.length != 0) {
