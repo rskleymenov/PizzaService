@@ -20,12 +20,14 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fusillade.domain.entity.Address;
 import com.fusillade.service.AddressService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/repositoryInMemDBContext.xml" })
+@Transactional
 public class SimpleAddressServiceTest {
 	
 	@Autowired
@@ -43,7 +45,7 @@ public class SimpleAddressServiceTest {
 		final String sql = "SELECT * FROM ADDRESSES WHERE id = ?";
 		Address address = new Address("adr", "adr");
 		address = addressService.save(address);
-		
+		addressService.findById(address.getId());
 		Address actualAddress = jdbcTemplate.queryForObject(sql, new Object[] { address.getId() },
 				new BeanPropertyRowMapper<Address>(Address.class));
 
@@ -66,6 +68,7 @@ public class SimpleAddressServiceTest {
 		int id = keyHolder.getKey().intValue();
 
 		addressService.delete(id);
+		addressService.findById(id);
 
 		final String selectSQL = "SELECT * FROM ADDRESSES WHERE id = ?";
 

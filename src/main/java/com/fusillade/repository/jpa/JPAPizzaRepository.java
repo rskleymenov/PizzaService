@@ -18,7 +18,11 @@ public class JPAPizzaRepository implements PizzaRepository {
 	
 	@Override
 	public Pizza findById(int id) {
-		return em.find(Pizza.class, id);
+		List<Pizza> pizzas =  em.createQuery("select p from Pizza p where p.id = :id", Pizza.class).setParameter("id", id).getResultList();
+		if (pizzas.isEmpty()) {
+			return null;
+		}
+		return pizzas.get(0);
 	}
 
 	@Override

@@ -18,7 +18,11 @@ public class JPAOrderRepository implements OrderRepository {
 
 	@Override
 	public Order findById(int id) {
-		return em.find(Order.class, id);
+		List<Order> orders =  em.createQuery("select o from Order o where o.id = :id", Order.class).setParameter("id", id).getResultList();
+		if (orders.isEmpty()) {
+			return null;
+		}
+		return orders.get(0);
 	}
 
 

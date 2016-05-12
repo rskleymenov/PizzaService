@@ -22,6 +22,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fusillade.domain.discounts.impl.DiscountCard;
 import com.fusillade.domain.entity.Address;
@@ -30,6 +31,7 @@ import com.fusillade.service.CustomerService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/repositoryInMemDBContext.xml" })
+@Transactional
 public class SimpleCustomerServiceTest {
 	@Autowired
 	private CustomerService customerService;
@@ -69,7 +71,7 @@ public class SimpleCustomerServiceTest {
 		Address address = new Address("a", "b");
 		expectedCustomer.setAddresses(Arrays.asList(address));
 		expectedCustomer = customerService.save(expectedCustomer);
-		
+		customerService.findById(expectedCustomer.getId());
 		Customer actualCustomer = jdbcTemplate.queryForObject(sqlCust, new Object[] { expectedCustomer.getId() },
 				new BeanPropertyRowMapper<Customer>(Customer.class));
 		
@@ -96,6 +98,7 @@ public class SimpleCustomerServiceTest {
 		int custId = keyHolder.getKey().intValue();
 		
 		customerService.delete(custId);
+		customerService.findById(custId);
 		
 		final String selectSQL = "SELECT * FROM accumulative_cards WHERE id = ?";
 

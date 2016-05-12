@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
@@ -19,9 +18,14 @@ public class JPACustomerRepository implements CustomerRepository {
 
 	@Override
 	public Customer findById(int id) {
-		Query query = em.createQuery("select c from Customer c LEFT JOIN FETCH c.addresses a LEFT JOIN FETCH c.orders ord WHERE c.id = :id");
-		query.setParameter("id", id);
-		return (Customer) query.getSingleResult();
+		List<Customer> customers = em
+				.createQuery(
+						"select c from Customer c LEFT JOIN FETCH c.addresses a LEFT JOIN FETCH c.orders ord WHERE c.id = :id", Customer.class)
+				.setParameter("id", id).getResultList();
+		if (customers.isEmpty()) {
+			return null;
+		}
+		return customers.get(0);
 	}
 
 	@Override

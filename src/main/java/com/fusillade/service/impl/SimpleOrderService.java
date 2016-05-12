@@ -1,6 +1,7 @@
 package com.fusillade.service.impl;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -134,6 +135,11 @@ public class SimpleOrderService implements OrderService {
 	@Override
 	public Order findById(int id) {
 		return orderRepository.findById(id);
+	}
+
+	@Override
+	public List<Order> getAll() {
+		return orderRepository.getAll();
 	}
 
 }

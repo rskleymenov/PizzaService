@@ -18,7 +18,11 @@ public class JPAAddressRepository implements AddressRepository {
 	
 	@Override
 	public Address findById(int id) {
-		return em.find(Address.class, id);
+		List<Address> addresses =  em.createQuery("select d from Address d where d.id = :id", Address.class).setParameter("id", id).getResultList();
+		if (addresses.isEmpty()) {
+			return null;
+		}
+		return addresses.get(0);
 	}
 
 	@Override

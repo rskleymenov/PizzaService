@@ -1,5 +1,6 @@
 package com.fusillade.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.fusillade.domain.discounts.Discount;
@@ -28,5 +29,6 @@ public interface OrderService {
 	
 	Order findById(int id);
 	
+	List<Order> getAll();
 
 }

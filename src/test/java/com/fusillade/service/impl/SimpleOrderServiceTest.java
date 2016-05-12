@@ -21,6 +21,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fusillade.domain.discounts.impl.MaxPricePizzaDiscount;
 import com.fusillade.domain.entity.Address;
@@ -33,6 +34,7 @@ import com.fusillade.service.OrderService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/repositoryInMemDBContext.xml" })
+@Transactional
 public class SimpleOrderServiceTest {
 
 	@Autowired
@@ -73,7 +75,7 @@ public class SimpleOrderServiceTest {
 		pizzas.put(pizza, 3);
 
 		Order order = orderService.placeNewOrder(customer, orderAddress, pizzas);
-
+		orderService.findById(order.getId());
 		int addrId = jdbcTemplate.queryForObject(addrIdSQL, new Object[] { order.getId() }, Integer.class);
 		int custId = jdbcTemplate.queryForObject(custIdSQL, new Object[] { order.getId() }, Integer.class);
 		assertEquals(order.getAddress().getId(), addrId);
@@ -104,6 +106,7 @@ public class SimpleOrderServiceTest {
 		Order order = orderService.placeNewOrder(customer, orderAddress, pizzas);
 		orderService.addDiscounts(new MaxPricePizzaDiscount());
 		order = orderService.applyDiscountsToOrder(order);
+		orderService.findById(order.getId());
 		
 		Double discount = jdbcTemplate.queryForObject(sqlForOrder, new Object[] {order.getId()}, Double.class);
 		assertEquals(Double.valueOf(6.66d), discount, 0.01);
@@ -136,6 +139,7 @@ public class SimpleOrderServiceTest {
 		pizzas = new HashMap<>();
 		pizzas.put(pizza, numberOfPizzasForUpdate);
 		orderService.changeOrder(order, pizzas);
+		orderService.findById(order.getId());
 		Integer numOfPizzas = jdbcTemplate.queryForObject(selectUpdatedPizzas, new Object[] {order.getId()}, Integer.class);
 		assertEquals(numberOfPizzasForUpdate, numOfPizzas);
 	}

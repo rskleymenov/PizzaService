@@ -18,7 +18,11 @@ public class JPADiscountCardRepository implements AccumulativeCardRepository{
 	
 	@Override
 	public DiscountCard findById(int id) {
-		return em.find(DiscountCard.class, id);
+		List<DiscountCard> discounts =  em.createQuery("select d from DiscountCard d where d.id = :id", DiscountCard.class).setParameter("id", id).getResultList();
+		if (discounts.isEmpty()) {
+			return null;
+		}
+		return discounts.get(0);
 	}
 
 	@Override

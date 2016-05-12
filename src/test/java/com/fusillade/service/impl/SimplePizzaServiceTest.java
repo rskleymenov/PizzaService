@@ -21,6 +21,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fusillade.domain.entity.Pizza;
 import com.fusillade.domain.entity.enums.PizzaType;
@@ -28,6 +29,7 @@ import com.fusillade.service.PizzaService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/repositoryInMemDBContext.xml" })
+@Transactional
 public class SimplePizzaServiceTest {
 
 	@Autowired
@@ -65,7 +67,7 @@ public class SimplePizzaServiceTest {
 		final String sql = "SELECT * FROM PIZZAS WHERE id = ?";
 		Pizza expectedPizza = new Pizza("MeatBalls", 55.25d, PizzaType.Meat);
 		expectedPizza = pizzaService.save(expectedPizza);
-
+		pizzaService.findById(expectedPizza.getId());
 		Pizza actualPizza = jdbcTemplate.queryForObject(sql, new Object[] { expectedPizza.getId() },
 				new BeanPropertyRowMapper<Pizza>(Pizza.class));
 
@@ -87,6 +89,8 @@ public class SimplePizzaServiceTest {
 		Integer id = keyHolder.getKey().intValue();
 
 		pizzaService.delete(id);
+		
+		pizzaService.getAll();
 
 		final String selectSQL = "SELECT * FROM PIZZAS WHERE id = ?";
 
