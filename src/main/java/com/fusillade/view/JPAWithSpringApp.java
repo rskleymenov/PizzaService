@@ -1,4 +1,4 @@
-package com.fusillade.view;
+/*package com.fusillade.view;
 
 import java.util.Arrays;
 
@@ -29,7 +29,7 @@ public class JPAWithSpringApp {
 			DiscountService discountService = applicationContext.getBean(DiscountService.class);
 			AddressService addressService = applicationContext.getBean(AddressService.class);
 			
-/*			Pizza pizza = new Pizza("new", 55d, PizzaType.Meat);
+			Pizza pizza = new Pizza("new", 55d, PizzaType.Meat);
 			pizza = pizzaService.save(pizza);
 			Map<Pizza, Integer> pizzas = new HashMap<>();
 			pizzas.put(pizza, 2);
@@ -39,7 +39,7 @@ public class JPAWithSpringApp {
 			
 			
 			DiscountCard discountCard = new DiscountCard(40d, customer);
-			discountService.save(discountCard);*/
+			discountService.save(discountCard);
 			
 			Customer customer = new Customer("123new", "das", Arrays.asList(addressService.findById(16)));
 			
@@ -56,3 +56,4 @@ public class JPAWithSpringApp {
 		}
 	}
 }
+*/
