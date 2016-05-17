@@ -122,9 +122,6 @@ public class SimpleDiscountServiceTest {
 	public void getAllTest() {
 		final String sql = "INSERT INTO accumulative_cards(id, sum, customer_id) values (ACCUMULATIVE_SEQ.NEXTVAL, 10.55, "
 				+ customerId + ")";
-		final String clearSQL = "DELETE FROM ACCUMULATIVE_CARDS WHERE ID <> 0";
-
-		jdbcTemplate.update(clearSQL);
 		jdbcTemplate.update(sql);
 
 		List<DiscountCard> actual = discountService.getAll();
