@@ -20,7 +20,7 @@ public class JPACustomerRepository implements CustomerRepository {
 	public Customer findById(int id) {
 		List<Customer> customers = em
 				.createQuery(
-						"select c from Customer c LEFT JOIN FETCH c.addresses a LEFT JOIN FETCH c.orders ord WHERE c.id = :id", Customer.class)
+						"select c from Customer c LEFT JOIN FETCH c.orders a WHERE c.id = :id", Customer.class)
 				.setParameter("id", id).getResultList();
 		if (customers.isEmpty()) {
 			return null;

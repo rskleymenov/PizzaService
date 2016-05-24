@@ -1,4 +1,3 @@
-<%@ page session="false"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -16,7 +15,6 @@ th {
 }
 </style>
 </head>
-
 <body>
 	<div class="container">
 		<br> <br> <br>
@@ -40,18 +38,17 @@ th {
 							<td>${pizza.name}</td>
 							<td>${pizza.price}</td>
 							<td>${pizza.type}</td>
-							<td><spring:url value="/pizzas/${pizza.id}/update"
-									var="updateUrl" />
+							<td><spring:url value="/pizzas/${pizza.id}" var="updateUrl" />
 								<button class="btn btn-warning"
 									onclick="location.href='${updateUrl}'">Update</button></td>
-
-							<td><spring:url value="/pizzas/${pizza.id}/delete"
-									var="deleteUrl" /> <form:form method="POST"
-									action="${deleteUrl}">
+							<td><spring:url value="/pizzas/${pizza.id}" var="deleteUrl" />
+								<form:form method="POST" action="${deleteUrl}">
 									<button class="btn btn-success" type="submit">Delete</button>
 								</form:form></td>
 					</c:forEach>
 				</table>
+
+
 				<div align="center">
 					<spring:url value="/pizzas/add" var="addPizzaUrl" />
 					<button style="width: 30%;" class="btn btn-success"

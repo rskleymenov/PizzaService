@@ -19,40 +19,35 @@ public class PizzaController {
 	@Autowired
 	private PizzaService pizzaService;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String index(Model model) {
-		return "redirect:/pizzas";
-	}
-
 	@RequestMapping(value = "/pizzas", method = RequestMethod.GET)
 	public String showAllPizzas(Model model) {
 		model.addAttribute("pizzas", pizzaService.getAll());
 		return "pizzaslist";
 	}
 
-	@RequestMapping(value = "/pizzas/{id}/delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/pizzas/{id}", method = RequestMethod.POST)
 	public String deletePizza(@PathVariable("id") int id, final RedirectAttributes redirectAttributes) {
 		try {
-		pizzaService.delete(id);
+			pizzaService.delete(id);
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("msg", "Can't delete pizza!");
 		}
 		return "redirect:/pizzas";
 	}
-	
-	@RequestMapping(value = "/pizzas/{id}/update", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/pizzas/{id}", method = RequestMethod.GET)
 	public String showPizzaUpdateForm(@PathVariable("id") int id, Model model) {
 		Pizza pizza = pizzaService.findById(id);
 		model.addAttribute("pizzaForm", pizza);
 		return "updatepizza";
 	}
-	
+
 	@RequestMapping(value = "/pizzas", method = RequestMethod.POST)
 	public String saveOrUpdatePizza(@ModelAttribute("pizzaForm") Pizza pizza, Model model) {
 		pizzaService.save(pizza);
 		return "redirect:/pizzas";
 	}
-	
+
 	@RequestMapping(value = "/pizzas/add", method = RequestMethod.GET)
 	public String showPizzaAddForm(Model model) {
 		Pizza pizza = new Pizza();
@@ -64,5 +59,10 @@ public class PizzaController {
 		model.addAttribute("pizzaForm", pizza);
 		return "updatepizza";
 	}
-
+	
+	@RequestMapping(value = "/angular", method = RequestMethod.POST)
+	public String consoleDebug(Model model) {
+		System.out.println("angular");
+		return "pizzaslist";
+	}
 }

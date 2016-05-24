@@ -43,7 +43,7 @@ public class Order {
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "CUSTOMER_ID")
 	private Customer customer;
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToOne(cascade = { CascadeType.PERSIST })
 	@JoinColumn(name = "ADDRESS_ID")
 	private Address address;
 	@ElementCollection(fetch = FetchType.EAGER)
